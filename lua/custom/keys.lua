@@ -1,3 +1,14 @@
+-- Vim default keymap
+-- Keymaps for better default experience
+-- See `:help vim.keymap.set()`
+vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+
+-- Remap for dealing with word wrap
+vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+
+
+-- which key keymaps
 local status_ok, which_key = pcall(require, "which-key")
 if not status_ok then
   return
@@ -33,12 +44,23 @@ local opts = {
 }
 
 local mappings = {
+  ["b"] = {
+    name = "Buffer",
+    h = { "<cmd>BufferCloseBuffersLeft<cr>", "Close Buffers Left" },
+    l = { "<cmd>BufferCloseBuffersRight<cr>", "Close Buffers Right" },
+    n = { "<cmd>BufferNext<cr>", "Next Buffer" },
+    b = { "<cmd>BufferPrevious<cr>", "Previous Buffer" },
+    c = { "<cmd>BufferClose<cr>", "Close Buffer" },
+    m = { "<cmd>JABSOpen<cr>", "Buffer Switcher" }
+  },
   ["e"] = { "<cmd>NeoTreeShowToggle<cr>", "Explorer" },
   ["g"] = {
     name = "Git",
     g = { "<cmd>LazyGit<cr>", "LazyGit" },
   },
   ["F"] = { "<cmd>Spectre<cr>", "Find/Replace" },
+  ["q"] = { "<cmd>quit<cr>", "quit" },
+  ["Q"] = { "<cmd>quitall<cr>", "quit all" },
   ["s"] = { name = "Search" },
   ["t"] = {
     name = "Diagnostics",
@@ -51,6 +73,7 @@ local mappings = {
     R = { '<cmd>lua require("renamer").rename()<cr>', "rename" },
     S = { "<cmd>SymbolsOutline<cr>", "Symbols" }
   },
+  ["w"] = { "<cmd>write<cr>", "write" },
 }
 
 which_key.setup(setup)
