@@ -1,9 +1,12 @@
 return {
   {
-    "startup-nvim/startup.nvim",
-    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+    'glepnir/dashboard-nvim',
+    event = 'VimEnter',
     config = function()
-      require "startup".setup({ theme = "dashboard" })
-    end
+      require('dashboard').setup {
+        -- config
+      }
+    end,
+    dependencies = { { 'nvim-tree/nvim-web-devicons' } }
   }
 }

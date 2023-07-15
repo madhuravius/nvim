@@ -218,9 +218,6 @@ vim.o.updatetime = 250
 vim.o.timeout = true
 vim.o.timeoutlen = 300
 
--- Show help text when cursorhold
-vim.cmd([[autocmd! CursorHold,CursorHoldI * :lua vim.lsp.buf.signature_help()]])
-
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
 
@@ -407,6 +404,7 @@ end
 --  the `settings` field of the server config. You must look up that documentation yourself.
 local servers = {
   clangd = {},
+  elixirls = {},
   gopls = {},
   pyright = {},
   rust_analyzer = {},
@@ -500,3 +498,15 @@ cmp.setup {
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
 require "custom.keys"
+
+-- Show help text when cursorhold
+vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float({focus=false, scope="line"})]]
+vim.diagnostic.config({
+  virtual_text = {
+    prefix = '●',
+  },
+  severity_sort = true,
+  float = {
+    source = "always",
+  },
+})

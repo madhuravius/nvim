@@ -1,4 +1,5 @@
 return {
+  { "farmergreg/vim-lastplace" },
   {
     "windwp/nvim-spectre",
     event = "BufRead",
