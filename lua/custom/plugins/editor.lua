@@ -27,7 +27,7 @@ return {
     end,
   },
   {
-    "HiPhish/nvim-ts-rainbow2",
+    "hiphish/rainbow-delimiters.nvim",
   },
   {
     "filipdutescu/renamer.nvim",
