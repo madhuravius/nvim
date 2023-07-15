@@ -218,6 +218,9 @@ vim.o.updatetime = 250
 vim.o.timeout = true
 vim.o.timeoutlen = 300
 
+-- Show help text when cursorhold
+vim.cmd([[autocmd! CursorHold,CursorHoldI * :lua vim.lsp.buf.signature_help()]])
+
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
 
@@ -305,6 +308,9 @@ require('nvim-treesitter.configs').setup {
       scope_incremental = '<c-s>',
       node_decremental = '<M-space>',
     },
+  },
+  rainbow = {
+    enable = true
   },
   textobjects = {
     select = {
@@ -502,4 +508,4 @@ cmp.setup {
 }
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
-require("lua/custom/keys")
+require "custom.keys"

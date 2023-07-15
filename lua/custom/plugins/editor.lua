@@ -1,5 +1,12 @@
 return {
   {
+    "windwp/nvim-spectre",
+    event = "BufRead",
+    config = function()
+      require("spectre").setup()
+    end,
+  },
+  {
     "ray-x/lsp_signature.nvim",
     config = function()
       require "lsp_signature".setup()

@@ -33,6 +33,13 @@ local opts = {
 }
 
 local mappings = {
+  ["e"] = { "<cmd>NeoTreeShowToggle<cr>", "Explorer" },
+  ["g"] = {
+    name = "Git",
+    g = { "<cmd>LazyGit<cr>", "LazyGit" },
+  },
+  ["F"] = { "<cmd>Spectre<cr>", "Find/Replace" },
+  ["s"] = { name = "Search" },
   ["t"] = {
     name = "Diagnostics",
     t = { "<cmd>TroubleToggle<cr>", "trouble" },
@@ -42,7 +49,8 @@ local mappings = {
     l = { "<cmd>TroubleToggle loclist<cr>", "loclist" },
     r = { "<cmd>TroubleToggle lsp_references<cr>", "references" },
     R = { '<cmd>lua require("renamer").rename()<cr>', "rename" },
-  }
+    S = { "<cmd>SymbolsOutline<cr>", "Symbols" }
+  },
 }
 
 which_key.setup(setup)
