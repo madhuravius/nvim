@@ -1,4 +1,5 @@
 return {
+  { 'Bekaboo/dropbar.nvim' },
   {
     "matbme/JABS.nvim",
     config = function()
