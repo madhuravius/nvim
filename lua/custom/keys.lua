@@ -51,29 +51,32 @@ local mappings = {
     n = { "<cmd>BufferNext<cr>", "Next Buffer" },
     b = { "<cmd>BufferPrevious<cr>", "Previous Buffer" },
     c = { "<cmd>BufferClose<cr>", "Close Buffer" },
-    m = { "<cmd>JABSOpen<cr>", "Buffer Switcher" }
+    m = { "<cmd>JABSOpen<cr>", "Buffer Switcher" },
+    n = { "<cmd>enew<cr>", "New Buffer" },
   },
+  ["c"] = { "<cmd>BufferClose<cr>", "Close" },
   ["e"] = { "<cmd>NeoTreeShowToggle<cr>", "Explorer" },
   ["g"] = {
     name = "Git",
     g = { "<cmd>LazyGit<cr>", "LazyGit" },
   },
   ["F"] = { "<cmd>Spectre<cr>", "Find/Replace" },
-  ["q"] = { "<cmd>quit<cr>", "quit" },
-  ["Q"] = { "<cmd>quitall<cr>", "quit all" },
+  ["n"] = { "<cmd>enew<cr>", "New" },
+  ["q"] = { "<cmd>quit<cr>", "Quit" },
+  ["Q"] = { "<cmd>quitall<cr>", "Quit all" },
   ["s"] = { name = "Search" },
   ["t"] = {
     name = "Diagnostics",
-    t = { "<cmd>TroubleToggle<cr>", "trouble" },
-    w = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "workspace" },
-    d = { "<cmd>TroubleToggle document_diagnostics<cr>", "document" },
-    q = { "<cmd>TroubleToggle quickfix<cr>", "quickfix" },
-    l = { "<cmd>TroubleToggle loclist<cr>", "loclist" },
-    r = { "<cmd>TroubleToggle lsp_references<cr>", "references" },
-    R = { '<cmd>lua require("renamer").rename()<cr>', "rename" },
+    t = { "<cmd>TroubleToggle<cr>", "Trouble" },
+    w = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Workspace" },
+    d = { "<cmd>TroubleToggle document_diagnostics<cr>", "Document" },
+    q = { "<cmd>TroubleToggle quickfix<cr>", "Quickfix" },
+    l = { "<cmd>TroubleToggle loclist<cr>", "Loclist" },
+    r = { "<cmd>TroubleToggle lsp_references<cr>", "References" },
+    R = { '<cmd>lua require("renamer").rename()<cr>', "Rename" },
     S = { "<cmd>SymbolsOutline<cr>", "Symbols" }
   },
-  ["w"] = { "<cmd>write<cr>", "write" },
+  ["w"] = { "<cmd>write<cr>", "Write" },
 }
 
 which_key.setup(setup)

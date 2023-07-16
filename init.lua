@@ -404,11 +404,14 @@ end
 --  the `settings` field of the server config. You must look up that documentation yourself.
 local lsp_config_util = require("lspconfig.util")
 local servers = {
+  bashls = {},
   clangd = {},
   elixirls = {},
   gopls = {},
   pyright = {},
   rust_analyzer = {},
+  sqlls = {},
+  tailwindcss = {},
   terraformls = {},
 
   lua_ls = {
