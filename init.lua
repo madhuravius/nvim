@@ -402,6 +402,7 @@ end
 --
 --  Add any additional override configuration in the following tables. They will be passed to
 --  the `settings` field of the server config. You must look up that documentation yourself.
+local lsp_config_util = require("lspconfig.util")
 local servers = {
   clangd = {},
   elixirls = {},
@@ -409,7 +410,6 @@ local servers = {
   pyright = {},
   rust_analyzer = {},
   terraformls = {},
-  tsserver = {},
 
   lua_ls = {
     Lua = {
@@ -417,6 +417,15 @@ local servers = {
       telemetry = { enable = false },
     },
   },
+}
+
+-- used for mason ensure installation of non-lsps
+local tools = {
+  "black",
+  "eslint_d",
+  "isort",
+  "prettier",
+  "tflint",
 }
 
 -- Setup neovim lua configuration
@@ -428,9 +437,10 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 -- Ensure the servers above are installed
 local mason_lspconfig = require 'mason-lspconfig'
+local servers_to_install = vim.tbl_deep_extend("keep", vim.tbl_keys(servers), { "tsserver", "denols" })
 
 mason_lspconfig.setup {
-  ensure_installed = vim.tbl_keys(servers),
+  ensure_installed = servers_to_install
 }
 
 mason_lspconfig.setup_handlers {
@@ -442,7 +452,26 @@ mason_lspconfig.setup_handlers {
     }
   end,
 }
+-- setup deno and tsserver separately because they trip themselves up
+require("lspconfig")["tsserver"].setup {
+  root_dir = lsp_config_util.root_pattern('package.json'),
+  single_file_support = false,
+}
+require("deno-nvim").setup {
+  server = {
+    capabilities = capabilities,
+    on_attach = on_attach,
+    root_dir = lsp_config_util.root_pattern('deno.json', 'deno.jsonc', 'denonvim.tag'),
+  },
+}
 
+local mason_registry = require 'mason-registry'
+for _, tool in ipairs(tools) do
+  local p = mason_registry.get_package(tool)
+  if not p:is_installed() then
+    p:install()
+  end
+end
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
 local cmp = require 'cmp'
