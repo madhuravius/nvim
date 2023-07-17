@@ -78,7 +78,7 @@ local mappings = {
   },
   ["c"] = { "<cmd>BufferClose<cr>", "Close" },
   ["C"] = { "<cmd>Telescope neoclip<cr>", "Clipboard" },
-  ["e"] = { "<cmd>NeoTreeShowToggle<cr>", "Explorer" },
+  ["e"] = { "<cmd>Neotree toggle<cr>", "Explorer" },
   ["g"] = {
     name = "Git/Clipboard",
     g = { "<cmd>LazyGit<cr>", "LazyGit" },
