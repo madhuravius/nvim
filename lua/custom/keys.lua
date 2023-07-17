@@ -77,6 +77,7 @@ local mappings = {
     m = { "<cmd>JABSOpen<cr>", "Buffer Switcher" },
   },
   ["c"] = { "<cmd>BufferClose<cr>", "Close" },
+  ["C"] = { "<cmd>Telescope neoclip<cr>", "Clipboard" },
   ["e"] = { "<cmd>NeoTreeShowToggle<cr>", "Explorer" },
   ["g"] = {
     name = "Git/Clipboard",

@@ -257,13 +257,14 @@ require('telescope').setup {
 
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
+pcall(require('telescope').load_extension, 'neoclip')
 
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim' },
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'ruby', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim' },
 
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = false,
@@ -387,6 +388,7 @@ local servers = {
   gopls = {},
   pyright = {},
   rust_analyzer = {},
+  solargraph = {},
   sqlls = {},
   tailwindcss = {},
   terraformls = {},
@@ -405,6 +407,8 @@ local tools = {
   "eslint_d",
   "isort",
   "prettier",
+  "rome",
+  "rubocop",
   "tflint",
 }
 
