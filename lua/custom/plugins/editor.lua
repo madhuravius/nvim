@@ -13,6 +13,9 @@ return {
     end,
   },
   {
+    "vim-crystal/vim-crystal",
+  },
+  {
     "windwp/nvim-spectre",
     event = "BufRead",
     config = function()
