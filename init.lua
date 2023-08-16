@@ -171,7 +171,7 @@ require('lazy').setup({
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
-  require 'kickstart.plugins.autoformat',
+  -- require 'kickstart.plugins.autoformat',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    You can use this folder to prevent any conflicts with this init.lua if you're interested in keeping
@@ -264,7 +264,10 @@ pcall(require('telescope').load_extension, 'neoclip')
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'elixir', 'go', 'hcl', 'lua', "nix", 'python', 'ruby', 'rust', 'tsx',
+  modules = {},
+  sync_install = false,
+  ignore_install = {},
+  ensure_installed = { 'astro', 'c', 'cpp', 'elixir', 'go', 'hcl', 'lua', "nix", 'python', 'ruby', 'rust', 'tsx',
     'typescript',
     'vimdoc',
     'vim' },
