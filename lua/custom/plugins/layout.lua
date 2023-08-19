@@ -32,14 +32,9 @@ return {
             ["<space>"] = "none",
           },
         },
-        file_system = {
+        filesystem = {
           filtered_items = {
             visible = true,
-            hide_dotfiles = false,
-            hide_gitignored = false,
-            hide_hidden = false,
-            show_hidden_count = true,
-            never_show = {},
           },
         },
       }
