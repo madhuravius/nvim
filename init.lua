@@ -56,7 +56,13 @@ if not vim.loop.fs_stat(lazypath) then
   }
 end
 vim.opt.rtp:prepend(lazypath)
-require('vim.lsp._watchfiles')._watchfunc = function(_, _, _) return true end
+local ok, wf = pcall(require, "vim.lsp._watchfiles")
+if ok then
+   -- disable lsp watcher. Too slow on linux
+   wf._watchfunc = function()
+     return function() end
+   end
+end
 
 -- NOTE: Here is where you install your plugins.
 --  You can configure plugins using the `config` key.
