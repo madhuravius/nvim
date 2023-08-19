@@ -56,6 +56,7 @@ if not vim.loop.fs_stat(lazypath) then
   }
 end
 vim.opt.rtp:prepend(lazypath)
+require('vim.lsp._watchfiles')._watchfunc = function(_, _, _) return true end
 
 -- NOTE: Here is where you install your plugins.
 --  You can configure plugins using the `config` key.
