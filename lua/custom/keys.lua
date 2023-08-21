@@ -80,11 +80,8 @@ local mappings = {
   ["C"] = { "<cmd>Telescope neoclip<cr>", "Clipboard" },
   ["e"] = { "<cmd>Neotree toggle<cr>", "Explorer" },
   ["g"] = {
-    name = "Git/Clipboard",
+    name = "Git",
     g = { "<cmd>LazyGit<cr>", "LazyGit" },
-  },
-  ["G"] = {
-    name = "Git Diff",
     o = { "<cmd>DiffviewOpen<cr>", "Diff View open" },
     c = { "<cmd>DiffviewClose<cr>", "Diff View close" }
   },
