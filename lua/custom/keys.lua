@@ -83,6 +83,11 @@ local mappings = {
     name = "Git/Clipboard",
     g = { "<cmd>LazyGit<cr>", "LazyGit" },
   },
+  ["G"] = {
+    name = "Git Diff",
+    o = { "<cmd>DiffviewOpen<cr>", "Diff View open" },
+    c = { "<cmd>DiffviewClose<cr>", "Diff View close" }
+  },
   ["F"] = { "<cmd>Spectre<cr>", "Find/Replace" },
   ["n"] = { "<cmd>enew<cr>", "New" },
   ["q"] = { "<cmd>quit<cr>", "Quit" },
