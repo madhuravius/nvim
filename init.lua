@@ -3,6 +3,8 @@
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+vim.g.termguicolors = true
+vim.opt.termguicolors = true
 
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
@@ -21,11 +23,12 @@ end
 vim.opt.rtp:prepend(lazypath)
 local ok, wf = pcall(require, "vim.lsp._watchfiles")
 if ok then
-   -- disable lsp watcher. Too slow on linux
-   wf._watchfunc = function()
-     return function() end
-   end
+  -- disable lsp watcher. Too slow on linux
+  wf._watchfunc = function()
+    return function() end
+  end
 end
+
 
 -- NOTE: Here is where you install your plugins.
 --  You can configure plugins using the `config` key.
@@ -75,8 +78,26 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim',          opts = {} },
-
+  { 'folke/which-key.nvim',                opts = {} },
+  {'eliseshaffer/darklight.nvim', config = function()
+      require("darklight").setup({
+        mode = 'colorscheme',
+        light_mode_colorscheme = 'everforest',
+        dark_mode_colorscheme = 'monokai-pro'
+      })
+    end,
+  },
+  {
+    "neanias/everforest-nvim",
+    version = false,
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require("everforest").setup({
+        vim.cmd.colorscheme 'everforest'
+      })
+    end,
+  },
   {
     -- Theme inspired by Atom
     "loctvl842/monokai-pro.nvim",
@@ -98,23 +119,12 @@ require('lazy').setup({
       },
     },
   },
-
-  {
-    -- Add indentation guides even on blank lines
-    'lukas-reineke/indent-blankline.nvim',
-    -- Enable `lukas-reineke/indent-blankline.nvim`
-    -- See `:help indent_blankline.txt`
-    opts = {
-      char = '┊',
-      show_trailing_blankline_indent = false,
-    },
-  },
-
+  { "lukas-reineke/indent-blankline.nvim", main = "ibl",     opts = {} },
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim',         opts = {} },
+  { 'numToStr/Comment.nvim',               opts = {} },
 
   -- Fuzzy Finder (files, lsp, etc)
-  { 'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } },
+  { 'nvim-telescope/telescope.nvim',       branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } },
 
   -- Fuzzy Finder Algorithm which requires local dependencies to be built.
   -- Only load if `make` is available. Make sure you have the system
