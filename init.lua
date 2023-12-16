@@ -219,6 +219,7 @@ require('nvim-treesitter.configs').setup {
   ignore_install = {},
   ensure_installed = {
     'astro',
+    'bash',
     'c',
     'cpp',
     'elixir',
