@@ -102,6 +102,7 @@ local mappings = {
     S = { "<cmd>SymbolsOutline<cr>", "Symbols" }
   },
   ["w"] = { "<cmd>write<cr>", "Write" },
+  ["S"] = { "<cmd>DarkLightSwitch<cr>", "Theme Switcher" },
 }
 
 which_key.setup(setup)
