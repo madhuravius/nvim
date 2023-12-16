@@ -79,25 +79,6 @@ require('lazy').setup({
 
   -- Useful plugin to show you pending keybinds.
   { 'folke/which-key.nvim',                opts = {} },
-  {'eliseshaffer/darklight.nvim', config = function()
-      require("darklight").setup({
-        mode = 'colorscheme',
-        light_mode_colorscheme = 'everforest',
-        dark_mode_colorscheme = 'monokai-pro'
-      })
-    end,
-  },
-  {
-    "neanias/everforest-nvim",
-    version = false,
-    lazy = false,
-    priority = 1000,
-    config = function()
-      require("everforest").setup({
-        vim.cmd.colorscheme 'everforest'
-      })
-    end,
-  },
   {
     -- Theme inspired by Atom
     "loctvl842/monokai-pro.nvim",

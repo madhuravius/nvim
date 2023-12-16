@@ -43,7 +43,7 @@ return {
     end,
   },
   {
-    "hiphish/rainbow-delimiters.nvim",
+    "hiphish/rainbow-delimiters.nvim", branch = "master"
   },
   {
     "filipdutescu/renamer.nvim",
