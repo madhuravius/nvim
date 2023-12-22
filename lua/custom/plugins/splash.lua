@@ -27,10 +27,10 @@ return {
         hide = {
           statusline = true,
           tabline = true,
-          winbar = true
+          winbar = true,
         },
       }
     end,
-    dependencies = { { 'nvim-tree/nvim-web-devicons' } }
-  }
+    dependencies = { { 'nvim-tree/nvim-web-devicons' } },
+  },
 }

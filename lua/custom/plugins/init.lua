@@ -5,20 +5,20 @@
 return {
   { 'neovim/nvim-lspconfig' },
   {
-    "windwp/nvim-spectre",
-    event = "BufRead",
+    'windwp/nvim-spectre',
+    event = 'BufRead',
     config = function()
-      require("spectre").setup()
+      require('spectre').setup()
     end,
   },
   {
-    "romgrk/nvim-treesitter-context",
+    'romgrk/nvim-treesitter-context',
     config = function()
-      require("treesitter-context").setup {
-        enable = true,   -- Enable this plugin (Can be enabled/disabled later via commands)
+      require('treesitter-context').setup {
+        enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
         throttle = true, -- Throttles plugin updates (may improve performance)
-        max_lines = 0,   -- How many lines the window should span. Values <= 0 mean no limit.
-        patterns = {     -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
+        max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+        patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
           default = {
             'class',
             'function',
@@ -26,16 +26,16 @@ return {
           },
         },
       }
-    end
+    end,
   },
   {
     'sigmasd/deno-nvim',
     config = function()
-      require("deno-nvim").setup {
+      require('deno-nvim').setup {
         server = {
-          root_dir = require "lspconfig.util".root_pattern('deno.json', 'deno.jsonc', 'denonvim.tag'),
+          root_dir = require('lspconfig.util').root_pattern('deno.json', 'deno.jsonc', 'denonvim.tag'),
         },
       }
-    end
+    end,
   },
 }

@@ -21,14 +21,13 @@ if not vim.loop.fs_stat(lazypath) then
   }
 end
 vim.opt.rtp:prepend(lazypath)
-local ok, wf = pcall(require, "vim.lsp._watchfiles")
+local ok, wf = pcall(require, 'vim.lsp._watchfiles')
 if ok then
   -- disable lsp watcher. Too slow on linux
   wf._watchfunc = function()
     return function() end
   end
 end
-
 
 -- NOTE: Here is where you install your plugins.
 --  You can configure plugins using the `config` key.
@@ -54,7 +53,7 @@ require('lazy').setup({
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim',       tag = 'legacy', opts = {} },
+      { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
@@ -78,10 +77,10 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim',                opts = {} },
+  { 'folke/which-key.nvim', opts = {} },
   {
     -- Theme inspired by Atom
-    "loctvl842/monokai-pro.nvim",
+    'loctvl842/monokai-pro.nvim',
     priority = 1000,
     config = function()
       vim.cmd.colorscheme 'monokai-pro'
@@ -100,12 +99,12 @@ require('lazy').setup({
       },
     },
   },
-  { "lukas-reineke/indent-blankline.nvim", main = "ibl",     opts = {} },
+  { 'lukas-reineke/indent-blankline.nvim', main = 'ibl', opts = {} },
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim',               opts = {} },
+  { 'numToStr/Comment.nvim', opts = {} },
 
   -- Fuzzy Finder (files, lsp, etc)
-  { 'nvim-telescope/telescope.nvim',       branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } },
+  { 'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } },
 
   -- Fuzzy Finder Algorithm which requires local dependencies to be built.
   -- Only load if `make` is available. Make sure you have the system
@@ -173,11 +172,11 @@ vim.o.completeopt = 'menuone,noselect'
 
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
-vim.opt.foldcolumn = "1"
+vim.opt.foldcolumn = '1'
 vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = -1
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
 vim.opt.foldenable = true
 vim.opt.wrap = true
 
@@ -209,7 +208,6 @@ require('telescope').setup {
 pcall(require('telescope').load_extension, 'fzf')
 pcall(require('telescope').load_extension, 'neoclip')
 
-
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
@@ -228,7 +226,7 @@ require('nvim-treesitter.configs').setup {
     'java',
     'kotlin',
     'lua',
-    "nix",
+    'nix',
     'proto',
     'python',
     'ruby',
@@ -236,7 +234,8 @@ require('nvim-treesitter.configs').setup {
     'tsx',
     'typescript',
     'vimdoc',
-    'vim' },
+    'vim',
+  },
 
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = false,
@@ -253,7 +252,7 @@ require('nvim-treesitter.configs').setup {
     },
   },
   rainbow = {
-    enable = true
+    enable = true,
   },
   textobjects = {
     select = {
@@ -344,7 +343,7 @@ local on_attach = function(_, bufnr)
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
     vim.lsp.buf.format()
   end, { desc = 'Format current buffer with LSP' })
-  require "lsp_signature".on_attach()
+  require('lsp_signature').on_attach()
 end
 
 -- Enable the following language servers
@@ -352,7 +351,7 @@ end
 --
 --  Add any additional override configuration in the following tables. They will be passed to
 --  the `settings` field of the server config. You must look up that documentation yourself.
-local lsp_config_util = require("lspconfig.util")
+local lsp_config_util = require 'lspconfig.util'
 local servers = {
   bashls = {},
   clangd = {},
@@ -380,18 +379,18 @@ local servers = {
 
 -- used for mason ensure installation of non-lsps
 local tools = {
-  "black",
-  "buf",
-  "codelldb",
-  "debugpy",
-  "delve",
-  "eslint_d",
-  "go-debug-adapter",
-  "isort",
-  "js-debug-adapter",
-  "prettier",
-  "rubocop",
-  "tflint",
+  'black',
+  'buf',
+  'codelldb',
+  'debugpy',
+  'delve',
+  'eslint_d',
+  'go-debug-adapter',
+  'isort',
+  'js-debug-adapter',
+  'prettier',
+  'rubocop',
+  'tflint',
 }
 
 -- Setup neovim lua configuration
@@ -403,10 +402,10 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 -- Ensure the servers above are installed
 local mason_lspconfig = require 'mason-lspconfig'
-local servers_to_install = vim.tbl_deep_extend("keep", vim.tbl_keys(servers), { "tsserver", "denols" })
+local servers_to_install = vim.tbl_deep_extend('keep', vim.tbl_keys(servers), { 'tsserver', 'denols' })
 
 mason_lspconfig.setup {
-  ensure_installed = servers_to_install
+  ensure_installed = servers_to_install,
 }
 
 mason_lspconfig.setup_handlers {
@@ -419,11 +418,11 @@ mason_lspconfig.setup_handlers {
   end,
 }
 -- setup deno and tsserver separately because they trip themselves up
-require("lspconfig")["tsserver"].setup {
-  root_dir = lsp_config_util.root_pattern('package.json'),
+require('lspconfig')['tsserver'].setup {
+  root_dir = lsp_config_util.root_pattern 'package.json',
   single_file_support = false,
 }
-require("deno-nvim").setup {
+require('deno-nvim').setup {
   server = {
     capabilities = capabilities,
     on_attach = on_attach,
@@ -483,25 +482,25 @@ cmp.setup {
   sources = {
     { name = 'luasnip' },
     { name = 'path' },
-    { name = 'nvim_lsp',               keyword_length = 3, max_item_count = 300 },
+    { name = 'nvim_lsp', keyword_length = 3, max_item_count = 300 },
     { name = 'nvim_lsp_signature_help' },
-    { name = 'nvim_lua',               keyword_length = 2 },
-    { name = 'buffer',                 keyword_length = 2 },
-    { name = 'vsnip',                  keyword_length = 2 },
+    { name = 'nvim_lua', keyword_length = 2 },
+    { name = 'buffer', keyword_length = 2 },
+    { name = 'vsnip', keyword_length = 2 },
   },
 }
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
-require "custom.keys"
+require 'custom.keys'
 
 -- Show help text when cursorhold
 vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float({focus=false, scope="line"})]]
-vim.diagnostic.config({
+vim.diagnostic.config {
   virtual_text = {
     prefix = '●',
   },
   severity_sort = true,
   float = {
-    source = "always",
+    source = 'always',
   },
-})
+}

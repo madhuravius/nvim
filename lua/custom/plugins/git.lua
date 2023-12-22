@@ -1,27 +1,27 @@
 return {
   {
-    "kdheepak/lazygit.nvim",
+    'kdheepak/lazygit.nvim',
     -- optional for floating window border decoration
     dependencies = {
-      "nvim-lua/plenary.nvim",
+      'nvim-lua/plenary.nvim',
     },
   },
   {
     'lewis6991/gitsigns.nvim',
     config = function()
       require('gitsigns').setup()
-    end
+    end,
   },
   {
-    "f-person/git-blame.nvim",
-    event = "BufRead",
+    'f-person/git-blame.nvim',
+    event = 'BufRead',
     config = function()
-      vim.cmd "highlight default link gitblame SpecialComment"
+      vim.cmd 'highlight default link gitblame SpecialComment'
       vim.g.gitblame_enabled = 0
     end,
   },
   {
-    "sindrets/diffview.nvim",
-    event = "BufRead",
+    'sindrets/diffview.nvim',
+    event = 'BufRead',
   },
 }
