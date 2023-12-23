@@ -32,6 +32,41 @@ vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { de
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 
+-- debug / breakpoint keymaps taken from: https://harrisoncramer.me/debugging-in-neovim/
+local _, dap = pcall(require, 'dap')
+local _, ui = pcall(require, 'dapui')
+
+vim.keymap.set('n', '<leader>du', function()
+  require('dapui').toggle()
+end, { desc = '[d]ebug [u]i'  })
+vim.keymap.set('n', '<leader>dS', function()
+  dap.continue()
+  ui.toggle {}
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-w>=', false, true, true), 'n', false) -- Spaces buffers evenly
+end, { desc = '[d]ebug [S]tart' } )
+vim.keymap.set('n', '<leader>db', dap.toggle_breakpoint, { desc = 'Set [d]ebug [b]reakpoint' })
+vim.keymap.set('n', '<leader>dc', dap.continue, { desc = '[d]ebug [c]ontinue' })
+vim.keymap.set('n', '<leader>dR', dap.restart, { desc = '[d]ebug [R]estart' })
+vim.keymap.set('n', '<leader>dL', function()
+  if vim.fn.filereadable(".vscode/launch.json") then
+    require('dap.ext.vscode').load_launchjs(nil, {})
+  end
+  require("dap").continue()
+end, { desc = '[d]ebug [L]oad config' })
+vim.keymap.set('n', '<leader>dn', dap.step_over, { desc = '[d]ebug over [o]' })
+vim.keymap.set('n', '<leader>di', dap.step_into, { desc = '[d]ebug step [i]n' })
+vim.keymap.set('n', '<leader>do', dap.step_out, { desc = '[d]ebug step [o]ut' })
+vim.keymap.set({ 'n', 'v' }, '<Leader>dh', function()
+  require('dap.ui.widgets').hover()
+end, { desc = '[d]ebug [h]over' })
+vim.keymap.set('n', '<leader>dC', dap.clear_breakpoints, { desc = '[d]ebug [C]lear breakpoints' })
+vim.keymap.set('n', '<leader>de', function()
+  dap.clear_breakpoints()
+  ui.toggle {}
+  dap.terminate()
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-w>=', false, true, true), 'n', false)
+end, { desc = '[d]ebug [e]nd' })
+
 -- which key keymaps
 local status_ok, which_key = pcall(require, 'which-key')
 if not status_ok then

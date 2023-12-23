@@ -6,6 +6,9 @@ vim.g.maplocalleader = ' '
 vim.g.termguicolors = true
 vim.opt.termguicolors = true
 
+vim.fn.sign_define('DapBreakpoint', { text = '🐞', texthl = '', linehl = '', numhl = '' })
+vim.fn.sign_define('DapStopped', { text = '▶️', texthl = '', linehl = '', numhl = '' })
+
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
 --    `:help lazy.nvim.txt` for more info
