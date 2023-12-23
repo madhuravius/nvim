@@ -363,7 +363,12 @@ local servers = {
   gopls = {},
   gradle_ls = {},
   jdtls = {},
-  java_language_server = {},
+  lua_ls = {
+    Lua = {
+      workspace = { checkThirdParty = false },
+      telemetry = { enable = false },
+    },
+  },
   kotlin_language_server = {},
   pyright = {},
   rust_analyzer = {},
@@ -371,26 +376,15 @@ local servers = {
   sqlls = {},
   tailwindcss = {},
   terraformls = {},
-
-  lua_ls = {
-    Lua = {
-      workspace = { checkThirdParty = false },
-      telemetry = { enable = false },
-    },
-  },
 }
 
 -- used for mason ensure installation of non-lsps
 local tools = {
   'black',
   'buf',
-  'codelldb',
-  'debugpy',
-  'delve',
   'eslint_d',
   'go-debug-adapter',
   'isort',
-  'js-debug-adapter',
   'prettier',
   'rubocop',
   'tflint',

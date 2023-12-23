@@ -2,7 +2,9 @@
 
 Initially based off: https://github.com/nvim-lua/kickstart.nvim
 
-To install: 
+Convenience copy pasta for use: 
 
-`git clone git@git.team-z.dev:madhuravius/nvim.git ~/.config/nvim`
-`git clone git@github.com:madhuravius/nvim.git ~/.config/nvim`
+```sh
+git clone git@github.com:madhuravius/nvim.git ~/.config/nvim
+git clone git@git.team-z.dev:madhuravius/nvim.git ~/.config/nvim
+```

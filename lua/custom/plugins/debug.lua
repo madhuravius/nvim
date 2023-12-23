@@ -9,7 +9,17 @@ return {
   {
     'theHamsta/nvim-dap-virtual-text',
     config = function()
-      require('nvim-dap-virtual-text').setup()
+      require('nvim-dap-virtual-text').setup {}
+    end,
+  },
+  {
+    'jay-babu/mason-nvim-dap.nvim',
+    config = function()
+      require('mason-nvim-dap').setup {
+        ensure_installed = { 'bash', 'codelldb', 'delve', 'elixir', 'javadb', 'javatest', 'js', 'python' },
+        automatic_installation = true,
+        handlers = {},
+      }
     end,
   },
   {
@@ -23,6 +33,55 @@ return {
     'leoluz/nvim-dap-go',
     config = function()
       require('dap-go').setup()
+    end,
+  },
+  {
+    'suketa/nvim-dap-ruby',
+    config = function()
+      require('dap-ruby').setup()
+    end,
+  },
+  {
+    'nvim-java/nvim-java',
+    dependencies = {
+      'nvim-java/lua-async-await',
+      'nvim-java/nvim-java-core',
+      'nvim-java/nvim-java-test',
+      'nvim-java/nvim-java-dap',
+      'MunifTanjim/nui.nvim',
+      'neovim/nvim-lspconfig',
+      'mfussenegger/nvim-dap',
+      {
+        'williamboman/mason.nvim',
+        opts = {
+          registries = {
+            'github:nvim-java/mason-registry',
+            'github:mason-org/mason-registry',
+          },
+        },
+      },
+      {
+        'williamboman/mason-lspconfig.nvim',
+        opts = {
+          handlers = {
+            ['jdtls'] = function()
+              require('java').setup()
+            end,
+          },
+        },
+      },
+    },
+  },
+  {
+    'simrat39/rust-tools.nvim',
+    dependencies = { 'neovim/nvim-lspconfig', 'nvim-lua/plenary.nvim', 'mfussenegger/nvim-dap' },
+    opts = function()
+      local extension_path = vim.env.HOME .. '/.local/share/nvim/mason/packages/codelldb/extension/'
+      local codelldb_path = extension_path .. 'adapter/codelldb'
+      local liblldb_path = extension_path .. 'lldb/lib/liblldb.dylib'
+      return {
+        dap = { adapter = require('rust-tools.dap').get_codelldb_adapter(codelldb_path, liblldb_path) },
+      }
     end,
   },
   {
