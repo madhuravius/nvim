@@ -204,7 +204,7 @@ require('telescope').setup {
         ['<C-d>'] = false,
       },
     },
-  },
+  }
 }
 
 -- Enable telescope fzf native, if installed
@@ -376,6 +376,7 @@ local servers = {
   sqlls = {},
   tailwindcss = {},
   terraformls = {},
+  tsserver = {}
 }
 
 -- used for mason ensure installation of non-lsps

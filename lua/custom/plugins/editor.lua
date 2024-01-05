@@ -12,6 +12,9 @@ return {
     end,
   },
   {
+    'ojroques/vim-oscyank'
+  },
+  {
     'vim-crystal/vim-crystal',
   },
   {
