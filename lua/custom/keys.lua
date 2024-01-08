@@ -66,6 +66,7 @@ vim.keymap.set('n', '<leader>de', function()
   dap.terminate()
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-w>=', false, true, true), 'n', false)
 end, { desc = '[d]ebug [e]nd' })
+vim.keymap.set('v', "Y", '<Plug>OSCYankVisual', { desc = '[Y] copy over osc' })
 
 -- which key keymaps
 local status_ok, which_key = pcall(require, 'which-key')
