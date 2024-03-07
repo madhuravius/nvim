@@ -13,6 +13,8 @@ vim.fn.sign_define('DapStopped', { text = '▶️', texthl = '', linehl = '', nu
 --    https://github.com/folke/lazy.nvim
 --    `:help lazy.nvim.txt` for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
+require('ibl').setup()
+
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system {
     'git',
@@ -102,7 +104,12 @@ require('lazy').setup({
       },
     },
   },
-  { 'lukas-reineke/indent-blankline.nvim', main = 'ibl', opts = {} },
+  {
+    -- Add indentation guides even on blank lines
+    'lukas-reineke/indent-blankline.nvim',
+    main = 'ibl',
+    opts = {},
+  },
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {} },
 
@@ -376,7 +383,7 @@ local servers = {
   sqlls = {},
   tailwindcss = {},
   terraformls = {},
-  tsserver = {}
+  tsserver = {},
 }
 
 -- used for mason ensure installation of non-lsps

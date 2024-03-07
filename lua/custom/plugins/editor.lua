@@ -18,6 +18,11 @@ return {
     'vim-crystal/vim-crystal',
   },
   {
+    'pmizio/typescript-tools.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
+    opts = {},
+  },
+  {
     'windwp/nvim-spectre',
     event = 'BufRead',
     config = function()
