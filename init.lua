@@ -13,7 +13,6 @@ vim.fn.sign_define('DapStopped', { text = '▶️', texthl = '', linehl = '', nu
 --    https://github.com/folke/lazy.nvim
 --    `:help lazy.nvim.txt` for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
-require('ibl').setup()
 
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system {
@@ -236,6 +235,7 @@ require('nvim-treesitter.configs').setup {
     'java',
     'kotlin',
     'lua',
+    'markdown',
     'nix',
     'proto',
     'python',
@@ -383,7 +383,7 @@ local servers = {
   sqlls = {},
   tailwindcss = {},
   terraformls = {},
-  tsserver = {},
+  ts_ls = {},
 }
 
 -- used for mason ensure installation of non-lsps
@@ -423,7 +423,7 @@ mason_lspconfig.setup_handlers {
   end,
 }
 -- setup deno and tsserver separately because they trip themselves up
-require('lspconfig')['tsserver'].setup {
+require('lspconfig')['ts_ls'].setup {
   root_dir = lsp_config_util.root_pattern 'package.json',
   single_file_support = false,
 }

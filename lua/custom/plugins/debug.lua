@@ -64,9 +64,9 @@ return {
         'williamboman/mason-lspconfig.nvim',
         opts = {
           handlers = {
-            ['jdtls'] = function()
-              require('java').setup()
-            end,
+            -- ['jdtls'] = function()
+            --   require('java').setup()
+            -- end,
           },
         },
       },
@@ -86,6 +86,7 @@ return {
   },
   {
     'rcarriga/nvim-dap-ui',
+    dependencies = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"},
     opts = {
       mappings = {
         expand = { '<CR>', '<2-LeftMouse>' },
