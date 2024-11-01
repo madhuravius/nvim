@@ -103,8 +103,7 @@ local opts = {
   nowait = true, -- use `nowait` when creating keymaps
 }
 
-local mappings = 
-{
+local mappings = {
   { '<leader>C', '<cmd>Telescope neoclip<cr>', desc = 'Clipboard', nowait = true, remap = false },
   { '<leader>F', '<cmd>Spectre<cr>', desc = 'Find/Replace', nowait = true, remap = false },
   { '<leader>Q', '<cmd>quitall<cr>', desc = 'Quit all', nowait = true, remap = false },
@@ -135,6 +134,24 @@ local mappings =
   { '<leader>tt', '<cmd>TroubleToggle<cr>', desc = 'Trouble', nowait = true, remap = false },
   { '<leader>tw', '<cmd>TroubleToggle workspace_diagnostics<cr>', desc = 'Workspace', nowait = true, remap = false },
   { '<leader>w', '<cmd>write<cr>', desc = 'Write', nowait = true, remap = false },
+  {
+    '<leader>ccq',
+    function()
+      local input = vim.fn.input 'Quick Chat: '
+      if input ~= '' then
+        require('CopilotChat').ask(input, { selection = require('CopilotChat.select').buffer })
+      end
+    end,
+    desc = 'CopilotChat - Quick chat',
+  },
+  {
+    '<leader>ccp',
+    function()
+      local actions = require 'CopilotChat.actions'
+      require('CopilotChat.integrations.telescope').pick(actions.prompt_actions())
+    end,
+    desc = 'CopilotChat - Prompt actions',
+  },
 }
 
 which_key.setup(setup)
