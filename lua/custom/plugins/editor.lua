@@ -12,8 +12,9 @@ return {
     end,
   },
   {
-    'ojroques/vim-oscyank'
+    'ojroques/vim-oscyank',
   },
+  { 'onsails/lspkind.nvim' },
   {
     'vim-crystal/vim-crystal',
   },

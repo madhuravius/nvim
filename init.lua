@@ -210,7 +210,7 @@ require('telescope').setup {
         ['<C-d>'] = false,
       },
     },
-  }
+  },
 }
 
 -- Enable telescope fzf native, if installed
@@ -446,7 +446,9 @@ end
 -- See `:help cmp`
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
+local lspkind = require 'lspkind'
 require('luasnip.loaders.from_vscode').lazy_load()
+
 luasnip.config.setup {}
 
 cmp.setup {
@@ -484,7 +486,15 @@ cmp.setup {
       end
     end, { 'i', 's' }),
   },
+  formatting = {
+    format = lspkind.cmp_format {
+      mode = 'symbol',
+      max_width = 50,
+      symbol_map = { Copilot = '' },
+    },
+  },
   sources = {
+    { name = 'copilot' },
     { name = 'luasnip' },
     { name = 'path' },
     { name = 'nvim_lsp', keyword_length = 3, max_item_count = 300 },
@@ -494,6 +504,7 @@ cmp.setup {
     { name = 'vsnip', keyword_length = 2 },
   },
 }
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
 require 'custom.keys'

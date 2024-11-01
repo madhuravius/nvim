@@ -66,7 +66,7 @@ vim.keymap.set('n', '<leader>de', function()
   dap.terminate()
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-w>=', false, true, true), 'n', false)
 end, { desc = '[d]ebug [e]nd' })
-vim.keymap.set('v', "Y", '<Plug>OSCYankVisual', { desc = '[Y] copy over osc' })
+vim.keymap.set('v', 'Y', '<Plug>OSCYankVisual', { desc = '[Y] copy over osc' })
 
 -- which key keymaps
 local status_ok, which_key = pcall(require, 'which-key')
@@ -103,44 +103,39 @@ local opts = {
   nowait = true, -- use `nowait` when creating keymaps
 }
 
-local mappings = {
-  ['b'] = {
-    name = 'Buffer',
-    h = { '<cmd>BufferCloseBuffersLeft<cr>', 'Close Buffers Left' },
-    l = { '<cmd>BufferCloseBuffersRight<cr>', 'Close Buffers Right' },
-    n = { '<cmd>BufferNext<cr>', 'Next Buffer' },
-    b = { '<cmd>BufferPrevious<cr>', 'Previous Buffer' },
-    c = { '<cmd>BufferClose<cr>', 'Close Buffer' },
-    m = { '<cmd>JABSOpen<cr>', 'Buffer Switcher' },
-  },
-  ['c'] = { '<cmd>BufferClose<cr>', 'Close' },
-  ['C'] = { '<cmd>Telescope neoclip<cr>', 'Clipboard' },
-  ['e'] = { '<cmd>Neotree toggle<cr>', 'Explorer' },
-  ['g'] = {
-    name = 'Git',
-    g = { '<cmd>LazyGit<cr>', 'LazyGit' },
-    o = { '<cmd>DiffviewOpen<cr>', 'Diff View open' },
-    c = { '<cmd>DiffviewClose<cr>', 'Diff View close' },
-  },
-  ['F'] = { '<cmd>Spectre<cr>', 'Find/Replace' },
-  ['n'] = { '<cmd>enew<cr>', 'New' },
-  ['q'] = { '<cmd>quit<cr>', 'Quit' },
-  ['Q'] = { '<cmd>quitall<cr>', 'Quit all' },
-  ['s'] = { name = 'Search' },
-  ['t'] = {
-    name = 'Diagnostics',
-    t = { '<cmd>TroubleToggle<cr>', 'Trouble' },
-    w = { '<cmd>TroubleToggle workspace_diagnostics<cr>', 'Workspace' },
-    d = { '<cmd>TroubleToggle document_diagnostics<cr>', 'Document' },
-    q = { '<cmd>TroubleToggle quickfix<cr>', 'Quickfix' },
-    l = { '<cmd>TroubleToggle loclist<cr>', 'Loclist' },
-    r = { '<cmd>TroubleToggle lsp_references<cr>', 'References' },
-    R = { '<cmd>lua require("renamer").rename()<cr>', 'Rename' },
-    S = { '<cmd>SymbolsOutline<cr>', 'Symbols' },
-  },
-  ['w'] = { '<cmd>write<cr>', 'Write' },
-  ['S'] = { '<cmd>DarkLightSwitch<cr>', 'Theme Switcher' },
+local mappings = 
+{
+  { '<leader>C', '<cmd>Telescope neoclip<cr>', desc = 'Clipboard', nowait = true, remap = false },
+  { '<leader>F', '<cmd>Spectre<cr>', desc = 'Find/Replace', nowait = true, remap = false },
+  { '<leader>Q', '<cmd>quitall<cr>', desc = 'Quit all', nowait = true, remap = false },
+  { '<leader>S', '<cmd>DarkLightSwitch<cr>', desc = 'Theme Switcher', nowait = true, remap = false },
+  { '<leader>b', group = 'Buffer', nowait = true, remap = false },
+  { '<leader>bb', '<cmd>BufferPrevious<cr>', desc = 'Previous Buffer', nowait = true, remap = false },
+  { '<leader>bc', '<cmd>BufferClose<cr>', desc = 'Close Buffer', nowait = true, remap = false },
+  { '<leader>bh', '<cmd>BufferCloseBuffersLeft<cr>', desc = 'Close Buffers Left', nowait = true, remap = false },
+  { '<leader>bl', '<cmd>BufferCloseBuffersRight<cr>', desc = 'Close Buffers Right', nowait = true, remap = false },
+  { '<leader>bm', '<cmd>JABSOpen<cr>', desc = 'Buffer Switcher', nowait = true, remap = false },
+  { '<leader>bn', '<cmd>BufferNext<cr>', desc = 'Next Buffer', nowait = true, remap = false },
+  { '<leader>c', '<cmd>BufferClose<cr>', desc = 'Close', nowait = true, remap = false },
+  { '<leader>e', '<cmd>Neotree toggle<cr>', desc = 'Explorer', nowait = true, remap = false },
+  { '<leader>g', group = 'Git', nowait = true, remap = false },
+  { '<leader>gc', '<cmd>DiffviewClose<cr>', desc = 'Diff View close', nowait = true, remap = false },
+  { '<leader>gg', '<cmd>LazyGit<cr>', desc = 'LazyGit', nowait = true, remap = false },
+  { '<leader>go', '<cmd>DiffviewOpen<cr>', desc = 'Diff View open', nowait = true, remap = false },
+  { '<leader>n', '<cmd>enew<cr>', desc = 'New', nowait = true, remap = false },
+  { '<leader>q', '<cmd>quit<cr>', desc = 'Quit', nowait = true, remap = false },
+  { '<leader>s', group = 'Search', nowait = true, remap = false },
+  { '<leader>t', group = 'Diagnostics', nowait = true, remap = false },
+  { '<leader>tR', '<cmd>lua require("renamer").rename()<cr>', desc = 'Rename', nowait = true, remap = false },
+  { '<leader>tS', '<cmd>SymbolsOutline<cr>', desc = 'Symbols', nowait = true, remap = false },
+  { '<leader>td', '<cmd>TroubleToggle document_diagnostics<cr>', desc = 'Document', nowait = true, remap = false },
+  { '<leader>tl', '<cmd>TroubleToggle loclist<cr>', desc = 'Loclist', nowait = true, remap = false },
+  { '<leader>tq', '<cmd>TroubleToggle quickfix<cr>', desc = 'Quickfix', nowait = true, remap = false },
+  { '<leader>tr', '<cmd>TroubleToggle lsp_references<cr>', desc = 'References', nowait = true, remap = false },
+  { '<leader>tt', '<cmd>TroubleToggle<cr>', desc = 'Trouble', nowait = true, remap = false },
+  { '<leader>tw', '<cmd>TroubleToggle workspace_diagnostics<cr>', desc = 'Workspace', nowait = true, remap = false },
+  { '<leader>w', '<cmd>write<cr>', desc = 'Write', nowait = true, remap = false },
 }
 
 which_key.setup(setup)
-which_key.register(mappings, opts)
+which_key.add(mappings, opts)
