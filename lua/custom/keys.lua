@@ -134,8 +134,9 @@ local mappings = {
   { '<leader>tt', '<cmd>TroubleToggle<cr>', desc = 'Trouble', nowait = true, remap = false },
   { '<leader>tw', '<cmd>TroubleToggle workspace_diagnostics<cr>', desc = 'Workspace', nowait = true, remap = false },
   { '<leader>w', '<cmd>write<cr>', desc = 'Write', nowait = true, remap = false },
+  { '<leader>G', group = 'GenAI/Copilot', nowait = true, remap = false },
   {
-    '<leader>ccq',
+    '<leader>Gq',
     function()
       local input = vim.fn.input 'Quick Chat: '
       if input ~= '' then
@@ -145,12 +146,19 @@ local mappings = {
     desc = 'CopilotChat - Quick chat',
   },
   {
-    '<leader>ccp',
+    '<leader>Gc',
     function()
       local actions = require 'CopilotChat.actions'
       require('CopilotChat.integrations.telescope').pick(actions.prompt_actions())
     end,
     desc = 'CopilotChat - Prompt actions',
+  },
+  {
+    '<leader>Gp',
+    '<cmd>Copilot panel<cr>',
+    desc = 'CopilotChat - Prompt actions',
+    nowait = true,
+    remap = false,
   },
 }
 
