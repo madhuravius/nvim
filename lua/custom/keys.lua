@@ -138,10 +138,9 @@ local mappings = {
   {
     '<leader>Gq',
     function()
-      local input = vim.fn.input 'Quick Chat: '
-      if input ~= '' then
+      vim.ui.input({ prompt = 'Copilot Quick Chat', default = '' }, function(input)
         require('CopilotChat').ask(input, { selection = require('CopilotChat.select').buffer })
-      end
+      end)
     end,
     desc = 'CopilotChat - Quick chat',
   },
