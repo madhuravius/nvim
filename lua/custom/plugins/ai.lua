@@ -12,9 +12,14 @@ return {
         require('copilot').setup {
           panel = {
             auto_refresh = true,
+            enabled = true,
           },
           suggestion = {
             auto_trigger = true,
+            enabled = true,
+            keymap = {
+              accept = '<M-a>',
+            },
           },
         }
       end,
@@ -26,6 +31,7 @@ return {
     'CopilotC-Nvim/CopilotChat.nvim',
     dependencies = {
       { 'zbirenbaum/copilot.lua' },
+      { 'zbirenbaum/copilot-cmp' },
       { 'nvim-lua/plenary.nvim' },
     },
     build = 'make tiktoken',

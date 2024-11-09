@@ -159,6 +159,7 @@ local mappings = {
     nowait = true,
     remap = false,
   },
+  { '<leader>GG', '<cmd>CopilotChat<cr>', desc = 'Copilot Chat', nowait = true, remap = false },
 }
 
 which_key.setup(setup)
