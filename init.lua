@@ -364,26 +364,28 @@ end
 local lsp_config_util = require 'lspconfig.util'
 local servers = {
   bashls = {},
-  clangd = {},
-  crystalline = {},
+  -- clangd = {},
+  -- crystalline = {},
   elixirls = {},
   gopls = {},
   gradle_ls = {},
-  jdtls = {},
-  lua_ls = {
-    Lua = {
-      workspace = { checkThirdParty = false },
-      telemetry = { enable = false },
-    },
-  },
+  -- jdtls = {},
+  -- lua_ls = {
+  --   Lua = {
+  --     workspace = { checkThirdParty = false },
+  --     telemetry = { enable = false },
+  --   },
+  -- },
   kotlin_language_server = {},
   pyright = {},
-  rust_analyzer = {},
+  -- rust_analyzer = {
+  --   cmd = "/home/madhu/.cargo/bin/rust-analyzer"
+  -- },
   solargraph = {},
   sqlls = {},
   tailwindcss = {},
-  terraformls = {},
-  ts_ls = {},
+  -- terraformls = {},
+  tsserver = {},
 }
 
 -- used for mason ensure installation of non-lsps
@@ -421,11 +423,6 @@ mason_lspconfig.setup_handlers {
       settings = servers[server_name],
     }
   end,
-}
--- setup deno and tsserver separately because they trip themselves up
-require('lspconfig')['ts_ls'].setup {
-  root_dir = lsp_config_util.root_pattern 'package.json',
-  single_file_support = false,
 }
 require('deno-nvim').setup {
   server = {
