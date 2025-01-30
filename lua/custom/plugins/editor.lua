@@ -74,10 +74,7 @@ return {
     end,
   },
   {
-    'ray-x/lsp_signature.nvim',
-    config = function()
-      require('lsp_signature').setup()
-    end,
+    'hrsh7th/cmp-nvim-lsp-signature-help',
   },
   {
     'norcalli/nvim-colorizer.lua',
