@@ -29,6 +29,7 @@ return {
   -- in mind
   {
     'CopilotC-Nvim/CopilotChat.nvim',
+    version = 'v3.9.0',
     dependencies = {
       { 'zbirenbaum/copilot.lua' },
       { 'zbirenbaum/copilot-cmp' },
