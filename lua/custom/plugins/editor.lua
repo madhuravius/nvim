@@ -12,6 +12,10 @@ return {
     end,
   },
   {
+  "sphamba/smear-cursor.nvim",
+  opts = {},
+  },
+  {
     'ojroques/vim-oscyank',
   },
   { 'onsails/lspkind.nvim' },
