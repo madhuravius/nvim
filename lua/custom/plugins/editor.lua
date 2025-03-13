@@ -23,6 +23,11 @@ return {
     'vim-crystal/vim-crystal',
   },
   {
+    "zeioth/garbage-day.nvim",
+    dependencies = "neovim/nvim-lspconfig",
+    event = "VeryLazy"
+  },
+  {
     'stevearc/dressing.nvim',
     opts = {},
     config = function()
