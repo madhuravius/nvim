@@ -12,8 +12,8 @@ return {
     end,
   },
   {
-  "sphamba/smear-cursor.nvim",
-  opts = {},
+    'sphamba/smear-cursor.nvim',
+    opts = {},
   },
   {
     'ojroques/vim-oscyank',
@@ -23,9 +23,9 @@ return {
     'vim-crystal/vim-crystal',
   },
   {
-    "zeioth/garbage-day.nvim",
-    dependencies = "neovim/nvim-lspconfig",
-    event = "VeryLazy"
+    'zeioth/garbage-day.nvim',
+    dependencies = 'neovim/nvim-lspconfig',
+    event = 'VeryLazy',
   },
   {
     'stevearc/dressing.nvim',
