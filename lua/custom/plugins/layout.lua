@@ -132,10 +132,22 @@ return {
       vim.g.barbar_auto_setup = true
     end,
     opts = {
-      -- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
       animation = true,
       insert_at_start = true,
-      -- …etc.
+      auto_hide = true,
+      clickable = true,
+      focus_on_close = 'left',
+      highlight_alternate = true,
+      icons = {
+        diagnostics = {
+          [vim.diagnostic.severity.ERROR] = { enabled = true, icon = '' },
+          [vim.diagnostic.severity.WARN] = { enabled = true, icon = '' },
+        },
+        inactive = { separator = { left = '', right = '' } },
+        pinned = { button = '' },
+        separator = { left = '', right = '' },
+      },
+      maximum_padding = math.huge,
     },
     version = '^1.0.0', -- optional: only update when a new 1.x version is released
   },
