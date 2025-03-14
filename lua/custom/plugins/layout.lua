@@ -24,6 +24,16 @@ return {
     },
     config = function()
       require('noice').setup {
+        routes = {
+          {
+            filter = {
+              event = 'msg_show',
+              kind = '',
+              find = 'written',
+            },
+            opts = { skip = true },
+          },
+        },
         lsp = {
           override = {
             ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
