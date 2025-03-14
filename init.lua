@@ -502,7 +502,16 @@ cmp.setup {
     { name = 'buffer', keyword_length = 2 },
     { name = 'vsnip', keyword_length = 2 },
   },
+  window = {
+    documentation = cmp.config.window.bordered(),
+    completion = cmp.config.window.bordered {
+      winhighlight = 'Normal:CmpPmenu,CursorLine:PmenuSel,Search:None',
+    },
+  },
 }
+
+vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded' })
+vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'rounded' })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
