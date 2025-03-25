@@ -34,13 +34,26 @@ return {
       { 'zbirenbaum/copilot.lua' },
       { 'zbirenbaum/copilot-cmp' },
       { 'nvim-lua/plenary.nvim' },
+      { 'folke/snacks.nvim' },
+      {
+        'nvim-telescope/telescope-ui-select.nvim',
+        config = function()
+          require('telescope').load_extension 'ui-select'
+        end,
+      },
     },
     build = 'make tiktoken',
     config = function()
       require('CopilotChat').setup {
+        extensions = {
+          ['ui-select'] = {
+            require('telescope.themes').get_dropdown(),
+          },
+        },
         window = {
+          border = 'rounded',
           height = 45,
-          layout = 'vertical',
+          layout = 'float',
           relative = 'cursor',
           row = 1,
           title = 'Copilot 🤖',
