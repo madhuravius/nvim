@@ -378,11 +378,11 @@ local servers = {
   kotlin_language_server = {},
   pyright = {},
   rust_analyzer = {},
-  solargraph = {},
   sqlls = {},
-  tailwindcss = {},
   terraformls = {},
   ts_ls = {},
+  -- solargraph = {},
+  -- tailwindcss = {},
 }
 
 -- used for mason ensure installation of non-lsps
