@@ -381,8 +381,8 @@ local servers = {
   sqlls = {},
   terraformls = {},
   ts_ls = {},
-  -- solargraph = {},
-  -- tailwindcss = {},
+  solargraph = {},
+  tailwindcss = {},
 }
 
 -- used for mason ensure installation of non-lsps

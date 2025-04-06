@@ -50,6 +50,7 @@ return {
             require('telescope.themes').get_dropdown(),
           },
         },
+        model = 'claude-3.7-sonnet',
         window = {
           border = 'rounded',
           height = 45,
