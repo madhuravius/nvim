@@ -5,6 +5,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.g.termguicolors = true
 vim.opt.termguicolors = true
+vim.opt.swapfile = false
 
 vim.fn.sign_define('DapBreakpoint', { text = '🐞', texthl = '', linehl = '', numhl = '' })
 vim.fn.sign_define('DapStopped', { text = '▶️', texthl = '', linehl = '', numhl = '' })
