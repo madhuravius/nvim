@@ -413,14 +413,16 @@ mason_lspconfig.setup {
   ensure_installed = servers_to_install,
 }
 
-mason_lspconfig.setup_handlers {
-  function(server_name)
-    require('lspconfig')[server_name].setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-      settings = servers[server_name],
-    }
-  end,
+mason_lspconfig.setup {
+  handlers = {
+    function(server_name)
+      require('lspconfig')[server_name].setup {
+        capabilities = capabilities,
+        on_attach = on_attach,
+        root_dir = lsp_config_util.root_pattern 'package.json',
+      }
+    end,
+  },
 }
 -- setup deno and tsserver separately because they trip themselves up
 require('lspconfig')['ts_ls'].setup {
