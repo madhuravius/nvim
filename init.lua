@@ -369,7 +369,7 @@ local servers = {
   elixirls = {},
   gopls = {},
   gradle_ls = {},
-  jdtls = {},
+  -- jdtls = {},
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
