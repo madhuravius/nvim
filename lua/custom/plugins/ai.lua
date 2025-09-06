@@ -9,6 +9,19 @@ return {
     opts = {
       instructions_file = 'ai.md',
       provider = 'copilot',
+      auto_suggestions_provider = 'copilot',
+      suggestion = {
+        debounce = 600,
+        throttle = 600,
+      },
+      behaviour = {
+        auto_suggestions = true,
+      },
+      mappings = {
+        suggestion = {
+          accept = '<M-a>',
+        },
+      },
     },
     dependencies = {
       'nvim-lua/plenary.nvim',
