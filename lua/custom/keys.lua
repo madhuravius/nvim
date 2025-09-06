@@ -134,36 +134,20 @@ local mappings = {
   { '<leader>tt', '<cmd>TroubleToggle<cr>', desc = 'Trouble', nowait = true, remap = false },
   { '<leader>tw', '<cmd>TroubleToggle workspace_diagnostics<cr>', desc = 'Workspace', nowait = true, remap = false },
   { '<leader>w', '<cmd>write<cr>', desc = 'Write', nowait = true, remap = false },
-  { '<leader>G', group = 'GenAI/Copilot', nowait = true, remap = false },
+  { '<leader>G', group = 'GenAI/Avante', nowait = true, remap = false },
   {
     '<leader>Gq',
-    function()
-      vim.ui.input({ prompt = 'Copilot Quick Chat', default = '' }, function(input)
-        require('CopilotChat').ask(input, { selection = require('CopilotChat.select').buffer })
-      end)
-    end,
-    desc = 'CopilotChat - Quick chat',
+    '<cmd>AvanteToggle<cr>',
+    desc = 'Avante - Toggle',
   },
   {
-    '<leader>Gc',
-    function()
-      require('CopilotChat').select_prompt()
-    end,
-    desc = 'CopilotChat - Prompt actions',
-  },
-  {
-    '<leader>Gm',
-    '<cmd>CopilotChatModels<cr>',
-    desc = 'CopilotChat - Select models',
-  },
-  {
-    '<leader>Gp',
-    '<cmd>Copilot panel<cr>',
-    desc = 'CopilotChat - Prompt actions',
+    '<leader>Gr',
+    '<cmd>AvanteClear<cr>',
+    desc = 'Clear context',
     nowait = true,
     remap = false,
   },
-  { '<leader>GG', '<cmd>CopilotChat<cr>', desc = 'Copilot Chat', nowait = true, remap = false },
+  { '<leader>GG', '<cmd>AvanteChat<cr>', desc = 'Avante Chat', nowait = true, remap = false },
 }
 
 which_key.setup(setup)

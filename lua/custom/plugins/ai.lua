@@ -1,67 +1,72 @@
 return {
   {
-    'zbirenbaum/copilot-cmp',
-    event = 'InsertEnter',
-    config = function()
-      require('copilot_cmp').setup()
-    end,
-    dependencies = {
-      'zbirenbaum/copilot.lua',
-      cmd = 'Copilot',
-      config = function()
-        require('copilot').setup {
-          panel = {
-            auto_refresh = true,
-            enabled = true,
+    'yetone/avante.nvim',
+    build = vim.fn.has 'win32' ~= 0 and 'powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false' or 'make',
+    event = 'VeryLazy',
+    version = false, -- Never set this value to "*"! Never!
+    ---@module 'avante'
+    ---@type avante.Config
+    opts = {
+      instructions_file = 'ai.md',
+      provider = 'copilot',
+      providers = {
+        claude = {
+          endpoint = 'https://api.anthropic.com',
+          model = 'claude-sonnet-4-20250514',
+          timeout = 30000, -- Timeout in milliseconds
+          extra_request_body = {
+            temperature = 0.75,
+            max_tokens = 20480,
           },
-          suggestion = {
-            auto_trigger = true,
-            enabled = true,
-            keymap = {
-              accept = '<M-a>',
-            },
+        },
+        moonshot = {
+          endpoint = 'https://api.moonshot.ai/v1',
+          model = 'kimi-k2-0711-preview',
+          timeout = 30000, -- Timeout in milliseconds
+          extra_request_body = {
+            temperature = 0.75,
+            max_tokens = 32768,
           },
-        }
-      end,
-    },
-  },
-  -- revisit this whole file with: https://github.com/ikotun-dev/nvim_rough/blob/fd9889de2529c795ca295d022a2789001d31d51f/lua/plugins/copilotchat.lua#L3
-  -- in mind
-  {
-    'CopilotC-Nvim/CopilotChat.nvim',
-    version = 'v3.9.0',
-    dependencies = {
-      { 'zbirenbaum/copilot.lua' },
-      { 'zbirenbaum/copilot-cmp' },
-      { 'nvim-lua/plenary.nvim' },
-      { 'folke/snacks.nvim' },
-      {
-        'nvim-telescope/telescope-ui-select.nvim',
-        config = function()
-          require('telescope').load_extension 'ui-select'
-        end,
+        },
       },
     },
-    build = 'make tiktoken',
-    config = function()
-      require('CopilotChat').setup {
-        extensions = {
-          ['ui-select'] = {
-            require('telescope.themes').get_dropdown(),
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'MunifTanjim/nui.nvim',
+      --- The below dependencies are optional,
+      'echasnovski/mini.pick', -- for file_selector provider mini.pick
+      'nvim-telescope/telescope.nvim', -- for file_selector provider telescope
+      'hrsh7th/nvim-cmp', -- autocompletion for avante commands and mentions
+      'ibhagwan/fzf-lua', -- for file_selector provider fzf
+      'stevearc/dressing.nvim', -- for input provider dressing
+      'folke/snacks.nvim', -- for input provider snacks
+      'nvim-tree/nvim-web-devicons', -- or echasnovski/mini.icons
+      'zbirenbaum/copilot.lua', -- for providers='copilot'
+      {
+        -- support for image pasting
+        'HakonHarnes/img-clip.nvim',
+        event = 'VeryLazy',
+        opts = {
+          -- recommended settings
+          default = {
+            embed_image_as_base64 = false,
+            prompt_for_file_name = false,
+            drag_and_drop = {
+              insert_mode = true,
+            },
+            -- required for Windows users
+            use_absolute_path = true,
           },
         },
-        model = 'claude-3.7-sonnet',
-        window = {
-          border = 'rounded',
-          height = 45,
-          layout = 'float',
-          relative = 'cursor',
-          row = 1,
-          title = 'Copilot 🤖',
-          width = 80,
-          zindex = 50,
+      },
+      {
+        -- Make sure to set this up properly if you have lazy=true
+        'MeanderingProgrammer/render-markdown.nvim',
+        opts = {
+          file_types = { 'markdown', 'Avante' },
         },
-      }
-    end,
+        ft = { 'markdown', 'Avante' },
+      },
+    },
   },
 }
