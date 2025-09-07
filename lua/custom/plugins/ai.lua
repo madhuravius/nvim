@@ -14,6 +14,9 @@ return {
         debounce = 600,
         throttle = 600,
       },
+      file_selector = {
+        provider = 'telescope',
+      },
       behaviour = {
         auto_suggestions = true,
       },
