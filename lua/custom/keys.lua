@@ -134,20 +134,13 @@ local mappings = {
   { '<leader>tt', '<cmd>TroubleToggle<cr>', desc = 'Trouble', nowait = true, remap = false },
   { '<leader>tw', '<cmd>TroubleToggle workspace_diagnostics<cr>', desc = 'Workspace', nowait = true, remap = false },
   { '<leader>w', '<cmd>write<cr>', desc = 'Write', nowait = true, remap = false },
-  { '<leader>G', group = 'GenAI/Avante', nowait = true, remap = false },
+  { '<leader>G', group = 'GenAI', nowait = true, remap = false },
   {
     '<leader>Gq',
-    '<cmd>AvanteToggle<cr>',
-    desc = 'Avante - Toggle',
+    '<cmd>CodeCompanionChat<cr>',
+    desc = 'AI - Toggle',
   },
-  {
-    '<leader>Gr',
-    '<cmd>AvanteClear<cr>',
-    desc = 'Clear context',
-    nowait = true,
-    remap = false,
-  },
-  { '<leader>GG', '<cmd>AvanteChat<cr>', desc = 'Avante Chat', nowait = true, remap = false },
+  { '<leader>GG', '<cmd>CodeCompanionActions<cr>', desc = 'AI Actions', nowait = true, remap = false },
 }
 
 which_key.setup(setup)

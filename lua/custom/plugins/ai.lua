@@ -1,68 +1,91 @@
 return {
   {
-    'yetone/avante.nvim',
-    build = vim.fn.has 'win32' ~= 0 and 'powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false' or 'make',
-    event = 'VeryLazy',
-    version = false, -- Never set this value to "*"! Never!
-    ---@module 'avante'
-    ---@type avante.Config
-    opts = {
-      instructions_file = 'ai.md',
-      provider = 'copilot',
-      auto_suggestions_provider = 'copilot',
-      suggestion = {
-        debounce = 600,
-        throttle = 600,
-      },
-      file_selector = {
-        provider = 'telescope',
-      },
-      behaviour = {
-        auto_suggestions = true,
-      },
-      mappings = {
-        suggestion = {
-          accept = '<M-a>',
-        },
-      },
-    },
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'MunifTanjim/nui.nvim',
-      --- The below dependencies are optional,
-      'echasnovski/mini.pick', -- for file_selector provider mini.pick
-      'nvim-telescope/telescope.nvim', -- for file_selector provider telescope
-      'hrsh7th/nvim-cmp', -- autocompletion for avante commands and mentions
-      'ibhagwan/fzf-lua', -- for file_selector provider fzf
-      'stevearc/dressing.nvim', -- for input provider dressing
-      'folke/snacks.nvim', -- for input provider snacks
-      'nvim-tree/nvim-web-devicons', -- or echasnovski/mini.icons
-      'zbirenbaum/copilot.lua', -- for providers='copilot'
-      {
-        -- support for image pasting
-        'HakonHarnes/img-clip.nvim',
-        event = 'VeryLazy',
-        opts = {
-          -- recommended settings
-          default = {
-            embed_image_as_base64 = false,
-            prompt_for_file_name = false,
-            drag_and_drop = {
-              insert_mode = true,
-            },
-            -- required for Windows users
-            use_absolute_path = true,
+    'olimorris/codecompanion.nvim',
+    config = function()
+      require('codecompanion').setup {
+        strategies = {
+          chat = {
+            adapter = 'copilot',
+          },
+          inline = {
+            adapter = 'copilot',
+          },
+          cmd = {
+            adapter = 'copilot',
           },
         },
-      },
-      {
-        -- Make sure to set this up properly if you have lazy=true
-        'MeanderingProgrammer/render-markdown.nvim',
-        opts = {
-          file_types = { 'markdown', 'Avante' },
+        chat = {
+          icons = {
+            buffer_pin = ' ',
+            buffer_watch = '👀 ',
+          },
         },
-        ft = { 'markdown', 'Avante' },
-      },
+        window = {
+          layout = 'float', -- float|vertical|horizontal|buffer
+          position = nil, -- left|right|top|bottom (nil will default depending on vim.opt.splitright|vim.opt.splitbelow)
+          border = 'single',
+          height = 0.8,
+          width = 0.45,
+          relative = 'editor',
+          full_height = true, -- when set to false, vsplit will be used to open the chat buffer vs. botright/topleft vsplit
+          sticky = false, -- when set to true and `layout` is not `"buffer"`, the chat buffer will remain opened when switching tabs
+          opts = {
+            breakindent = true,
+            cursorcolumn = false,
+            cursorline = false,
+            foldcolumn = '0',
+            linebreak = true,
+            list = false,
+            numberwidth = 1,
+            signcolumn = 'no',
+            spell = false,
+            wrap = true,
+          },
+        },
+        display = {
+          diff = {
+            enabled = true,
+            close_chat_at = 240, -- Close an open chat buffer if the total columns of your display are less than...
+
+            -- Options for the split diff provider
+            layout = 'vertical', -- vertical|horizontal split
+            opts = {
+              'internal',
+              'filler',
+              'closeoff',
+              'algorithm:histogram', -- https://adamj.eu/tech/2024/01/18/git-improve-diff-histogram/
+              'indent-heuristic', -- https://blog.k-nut.eu/better-git-diffs
+              'followwrap',
+              'linematch:120',
+            },
+
+            diff_signs = {
+              signs = {
+                text = '▌', -- Sign text for normal changes
+                reject = '✗', -- Sign text for rejected changes in super_diff
+                highlight_groups = {
+                  addition = 'DiagnosticOk',
+                  deletion = 'DiagnosticError',
+                  modification = 'DiagnosticWarn',
+                },
+              },
+              -- Super Diff options
+              icons = {
+                accepted = ' ',
+                rejected = ' ',
+              },
+              colors = {
+                accepted = 'DiagnosticOk',
+                rejected = 'DiagnosticError',
+              },
+            },
+          },
+        },
+      }
+    end,
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-treesitter/nvim-treesitter',
     },
   },
 }
