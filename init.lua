@@ -238,6 +238,7 @@ require('nvim-treesitter.configs').setup {
     'kotlin',
     'lua',
     'markdown',
+    'make',
     'nix',
     'prisma',
     'proto',
