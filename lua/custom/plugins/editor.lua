@@ -2,8 +2,8 @@ return {
   { 'farmergreg/vim-lastplace' },
   {
     'AckslD/nvim-neoclip.lua',
-    requires = {
-      { 'kkharji/sqlite.lua', module = 'sqlite' },
+    dependencies = {
+      { 'kkharji/sqlite.lua' },
       { 'nvim-telescope/telescope.nvim' },
       { 'ibhagwan/fzf-lua' },
     },

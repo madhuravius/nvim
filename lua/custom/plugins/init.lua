@@ -28,14 +28,4 @@ return {
       }
     end,
   },
-  {
-    'sigmasd/deno-nvim',
-    config = function()
-      require('deno-nvim').setup {
-        server = {
-          root_dir = require('lspconfig.util').root_pattern('deno.json', 'deno.jsonc', 'denonvim.tag'),
-        },
-      }
-    end,
-  },
 }

@@ -235,6 +235,7 @@ require('nvim-treesitter.configs').setup {
     'go',
     'hcl',
     'java',
+    'json',
     'kotlin',
     'lua',
     'markdown',
@@ -429,18 +430,33 @@ mason_lspconfig.setup {
     end,
   },
 }
--- setup deno and tsserver separately because they trip themselves up
-require('lspconfig')['ts_ls'].setup {
-  root_dir = lsp_config_util.root_pattern 'package.json',
+-- Setup TypeScript LSP using new vim.lsp.config API
+vim.lsp.config.ts_ls = {
+  cmd = { 'typescript-language-server', '--stdio' },
+  filetypes = { 'javascript', 'javascriptreact', 'javascript.jsx', 'typescript', 'typescriptreact', 'typescript.tsx' },
+  root_markers = { 'package.json', 'tsconfig.json' },
   single_file_support = false,
+  settings = {},
 }
-require('deno-nvim').setup {
-  server = {
-    capabilities = capabilities,
-    on_attach = on_attach,
-    root_dir = lsp_config_util.root_pattern('deno.json', 'deno.jsonc', 'denonvim.tag'),
-  },
-}
+vim.lsp.enable('ts_ls')
+
+-- Setup Deno LSP using new vim.lsp.config API
+if vim.fn.executable('deno') == 1 then
+  vim.lsp.config.denols = {
+    cmd = { 'deno', 'lsp' },
+    filetypes = { 'javascript', 'javascriptreact', 'javascript.jsx', 'typescript', 'typescriptreact', 'typescript.tsx' },
+    root_markers = { 'deno.json', 'deno.jsonc' },
+    single_file_support = true,
+    settings = {
+      deno = {
+        enable = true,
+        lint = true,
+        unstable = false,
+      },
+    },
+  }
+  vim.lsp.enable('denols')
+end
 
 local mason_registry = require 'mason-registry'
 for _, tool in ipairs(tools) do
