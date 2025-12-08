@@ -8,9 +8,6 @@ vim.g.termguicolors = true
 vim.opt.termguicolors = true
 vim.opt.swapfile = false
 
-vim.fn.sign_define('DapBreakpoint', { text = '🐞', texthl = '', linehl = '', numhl = '' })
-vim.fn.sign_define('DapStopped', { text = '▶️', texthl = '', linehl = '', numhl = '' })
-
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
 --    `:help lazy.nvim.txt` for more info
@@ -83,12 +80,72 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim', opts = {} },
+  {
+    'folke/which-key.nvim',
+    event = 'VeryLazy',
+    opts = {
+      preset = 'helix',
+      plugins = {
+        marks = true, -- shows a list of your marks on ' and `
+        registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
+        spelling = {
+          enabled = true, -- enabling this will show WhichKey when pressing z= to select spelling suggestions
+          suggestions = 20, -- how many suggestions should be shown in the list?
+        },
+        presets = {
+          operators = false, -- adds help for operators like d, y, ... and registers them for motion / text object completion
+          motions = true, -- adds help for motions
+          text_objects = true, -- help for text objects triggered after entering an operator
+          windows = true, -- default bindings on <c-w>
+          nav = true, -- misc bindings to work with windows
+          z = true, -- bindings for folds, spelling and others prefixed with z
+          g = true, -- bindings for prefixed with g
+        },
+      },
+
+      spec = {
+        { '<leader>C', '<cmd>Telescope neoclip<cr>', desc = 'Clipboard', nowait = true, remap = false },
+        { '<leader>F', '<cmd>Spectre<cr>', desc = 'Find/Replace', nowait = true, remap = false },
+        { '<leader>Q', '<cmd>quitall<cr>', desc = 'Quit all', nowait = true, remap = false },
+        { '<leader>S', '<cmd>DarkLightSwitch<cr>', desc = 'Theme Switcher', nowait = true, remap = false },
+        { '<leader>b', group = 'Buffer', nowait = true, remap = false },
+        { '<leader>bb', '<cmd>BufferPrevious<cr>', desc = 'Previous Buffer', nowait = true, remap = false },
+        { '<leader>bc', '<cmd>BufferClose<cr>', desc = 'Close Buffer', nowait = true, remap = false },
+        { '<leader>bh', '<cmd>BufferCloseBuffersLeft<cr>', desc = 'Close Buffers Left', nowait = true, remap = false },
+        { '<leader>bl', '<cmd>BufferCloseBuffersRight<cr>', desc = 'Close Buffers Right', nowait = true, remap = false },
+        { '<leader>bm', '<cmd>JABSOpen<cr>', desc = 'Buffer Switcher', nowait = true, remap = false },
+        { '<leader>bn', '<cmd>BufferNext<cr>', desc = 'Next Buffer', nowait = true, remap = false },
+        { '<leader>c', '<cmd>BufferClose<cr>', desc = 'Close', nowait = true, remap = false },
+        { '<leader>e', '<cmd>Neotree toggle<cr>', desc = 'Explorer', nowait = true, remap = false },
+        { '<leader>g', group = 'Git', nowait = true, remap = false },
+        { '<leader>gc', '<cmd>DiffviewClose<cr>', desc = 'Diff View close', nowait = true, remap = false },
+        { '<leader>gg', '<cmd>LazyGit<cr>', desc = 'LazyGit', nowait = true, remap = false },
+        { '<leader>go', '<cmd>DiffviewOpen<cr>', desc = 'Diff View open', nowait = true, remap = false },
+        { '<leader>n', '<cmd>enew<cr>', desc = 'New', nowait = true, remap = false },
+        { '<leader>q', '<cmd>quit<cr>', desc = 'Quit', nowait = true, remap = false },
+        { '<leader>s', group = 'Search', nowait = true, remap = false },
+        { '<leader>t', group = 'Diagnostics', nowait = true, remap = false },
+        { '<leader>tR', '<cmd>lua require("renamer").rename()<cr>', desc = 'Rename', nowait = true, remap = false },
+        { '<leader>tS', '<cmd>SymbolsOutline<cr>', desc = 'Symbols', nowait = true, remap = false },
+        { '<leader>td', '<cmd>Trouble diagnostics toggle<cr>', desc = 'Document', nowait = true, remap = false },
+        { '<leader>tl', '<cmd>Trouble loclist toggle<cr>', desc = 'Loclist', nowait = true, remap = false },
+        { '<leader>tq', '<cmd>Trouble qflist toggle<cr>', desc = 'Quickfix', nowait = true, remap = false },
+        { '<leader>tr', '<cmd>Trouble lsp toggle focus=false win.position=right<cr>', desc = 'References', nowait = true, remap = false },
+        { '<leader>tt', '<cmd>Trouble<cr>', desc = 'Trouble', nowait = true, remap = false },
+        { '<leader>w', '<cmd>write<cr>', desc = 'Write', nowait = true, remap = false },
+      },
+    },
+  },
   {
     -- Theme inspired by Atom
     'loctvl842/monokai-pro.nvim',
     priority = 1000,
     config = function()
+      require('monokai-pro').setup {
+        terminal_background = true,
+        devicons = true,
+        filter = 'spectrum',
+      }
       vim.cmd.colorscheme 'monokai-pro'
     end,
   },
@@ -115,7 +172,7 @@ require('lazy').setup({
   { 'numToStr/Comment.nvim', opts = {} },
 
   -- Fuzzy Finder (files, lsp, etc)
-  { 'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } },
+  { 'nvim-telescope/telescope.nvim', tag = 'v0.2.0', dependencies = { 'nvim-lua/plenary.nvim' } },
 
   -- Fuzzy Finder Algorithm which requires local dependencies to be built.
   -- Only load if `make` is available. Make sure you have the system
@@ -371,25 +428,25 @@ local lsp_config_util = require 'lspconfig.util'
 local servers = {
   bashls = {},
   clangd = {},
-  crystalline = {},
+  -- crystalline = {},
   elixirls = {},
   gopls = {},
-  gradle_ls = {},
+  -- gradle_ls = {},
   -- jdtls = {},
-  lua_ls = {
-    Lua = {
-      workspace = { checkThirdParty = false },
-      telemetry = { enable = false },
-    },
-  },
-  kotlin_language_server = {},
+  -- lua_ls = {
+  --   Lua = {
+  --     workspace = { checkThirdParty = false },
+  --     telemetry = { enable = false },
+  --   },
+  -- },
+  -- kotlin_language_server = {},
   pyright = {},
   rust_analyzer = {},
-  sqlls = {},
-  terraformls = {},
+  -- sqlls = {},
+  -- terraformls = {},
   ts_ls = {},
   solargraph = {},
-  tailwindcss = {},
+  -- tailwindcss = {},
 }
 
 -- used for mason ensure installation of non-lsps
@@ -397,7 +454,6 @@ local tools = {
   'black',
   'buf',
   'eslint_d',
-  'go-debug-adapter',
   'isort',
   'prettier',
   'rubocop',
@@ -438,10 +494,10 @@ vim.lsp.config.ts_ls = {
   single_file_support = false,
   settings = {},
 }
-vim.lsp.enable('ts_ls')
+vim.lsp.enable 'ts_ls'
 
 -- Setup Deno LSP using new vim.lsp.config API
-if vim.fn.executable('deno') == 1 then
+if vim.fn.executable 'deno' == 1 then
   vim.lsp.config.denols = {
     cmd = { 'deno', 'lsp' },
     filetypes = { 'javascript', 'javascriptreact', 'javascript.jsx', 'typescript', 'typescriptreact', 'typescript.tsx' },
@@ -455,16 +511,9 @@ if vim.fn.executable('deno') == 1 then
       },
     },
   }
-  vim.lsp.enable('denols')
+  vim.lsp.enable 'denols'
 end
 
-local mason_registry = require 'mason-registry'
-for _, tool in ipairs(tools) do
-  local p = mason_registry.get_package(tool)
-  if not p:is_installed() then
-    p:install()
-  end
-end
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
 local cmp = require 'cmp'

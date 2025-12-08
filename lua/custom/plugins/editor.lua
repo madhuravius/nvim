@@ -1,27 +1,9 @@
 return {
   { 'farmergreg/vim-lastplace' },
   {
-    'AckslD/nvim-neoclip.lua',
-    dependencies = {
-      { 'kkharji/sqlite.lua' },
-      { 'nvim-telescope/telescope.nvim' },
-      { 'ibhagwan/fzf-lua' },
-    },
-    config = function()
-      require('neoclip').setup {}
-    end,
-  },
-  {
-    'sphamba/smear-cursor.nvim',
-    opts = {},
-  },
-  {
     'ojroques/vim-oscyank',
   },
   { 'onsails/lspkind.nvim' },
-  {
-    'vim-crystal/vim-crystal',
-  },
   {
     'zeioth/garbage-day.nvim',
     dependencies = 'neovim/nvim-lspconfig',
