@@ -106,7 +106,6 @@ require('lazy').setup({
       spec = {
         { '<leader>F', '<cmd>Spectre<cr>', desc = 'Find/Replace', nowait = true, remap = false },
         { '<leader>Q', '<cmd>quitall<cr>', desc = 'Quit all', nowait = true, remap = false },
-        { '<leader>S', '<cmd>Scratch<cr>', desc = 'Scratchpad', nowait = true, remap = false },
         { '<leader>b', group = 'Buffer', nowait = true, remap = false },
         { '<leader>bb', '<cmd>BufferPrevious<cr>', desc = 'Previous Buffer', nowait = true, remap = false },
         { '<leader>bc', '<cmd>BufferClose<cr>', desc = 'Close Buffer', nowait = true, remap = false },
