@@ -1,3 +1,13 @@
+-- Terminal Mappings
+local function term_nav(dir)
+  ---@param self snacks.terminal
+  return function(self)
+    return self:is_floating() and '<c-' .. dir .. '>' or vim.schedule(function()
+      vim.cmd.wincmd(dir)
+    end)
+  end
+end
+
 return {
   { 'Bekaboo/dropbar.nvim' },
   {
@@ -18,67 +28,53 @@ return {
   {
     'folke/noice.nvim',
     event = 'VeryLazy',
-    dependencies = {
-      'MunifTanjim/nui.nvim',
-      'rcarriga/nvim-notify',
+    opts = {
+      lsp = {
+        override = {
+          ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
+          ['vim.lsp.util.stylize_markdown'] = true,
+          ['cmp.entry.get_documentation'] = true,
+        },
+      },
+      routes = {
+        {
+          filter = {
+            event = 'msg_show',
+            any = {
+              { find = '%d+L, %d+B' },
+              { find = '; after #%d+' },
+              { find = '; before #%d+' },
+            },
+          },
+          view = 'mini',
+        },
+      },
+      presets = {
+        bottom_search = true,
+        command_palette = true,
+        long_message_to_split = true,
+      },
     },
-    config = function()
-      require('noice').setup {
-        routes = {
-          {
-            filter = {
-              event = 'msg_show',
-              kind = '',
-              find = 'written',
-            },
-            opts = { skip = true },
-          },
-        },
-        lsp = {
-          override = {
-            ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
-            ['vim.lsp.util.stylize_markdown'] = true,
-            ['cmp.entry.get_documentation'] = true, -- requires hrsh7th/nvim-cmp
-          },
-        },
-        presets = {
-          bottom_search = true, -- use a classic bottom cmdline for search
-          command_palette = true, -- position the cmdline and popupmenu together
-          long_message_to_split = true, -- long messages will be sent to a split
-          inc_rename = false, -- enables an input dialog for inc-rename.nvim
-          lsp_doc_border = true, -- add a border to hover docs and signature help
-        },
-        views = {
-          cmdline_popup = {
-            border = {
-              style = 'rounded',
-              padding = { 1, 1 },
-            },
-            filter_options = {},
-            win_options = {
-              winhighlight = 'NormalFloat:NormalFloat,FloatBorder:FloatBorder',
-            },
-          },
-          popupmenu = {
-            relative = 'editor',
-            position = {
-              row = 8,
-              col = '50%',
-            },
-            size = {
-              width = 40,
-              height = 10,
-            },
-            border = {
-              style = 'rounded',
-              padding = { 0, 1 },
-            },
-            win_options = {
-              winhighlight = { Normal = 'Normal', FloatBorder = 'DiagnosticInfo' },
-            },
-          },
-        },
-      }
+    -- stylua: ignore
+    keys = {
+      { "<leader>sn", "", desc = "+noice"},
+      { "<S-Enter>", function() require("noice").redirect(vim.fn.getcmdline()) end, mode = "c", desc = "Redirect Cmdline" },
+      { "<leader>snl", function() require("noice").cmd("last") end, desc = "Noice Last Message" },
+      { "<leader>snh", function() require("noice").cmd("history") end, desc = "Noice History" },
+      { "<leader>sna", function() require("noice").cmd("all") end, desc = "Noice All" },
+      { "<leader>snd", function() require("noice").cmd("dismiss") end, desc = "Dismiss All" },
+      { "<leader>snt", function() require("noice").cmd("pick") end, desc = "Noice Picker (Telescope/FzfLua)" },
+      { "<c-f>", function() if not require("noice.lsp").scroll(4) then return "<c-f>" end end, silent = true, expr = true, desc = "Scroll Forward", mode = {"i", "n", "s"} },
+      { "<c-b>", function() if not require("noice.lsp").scroll(-4) then return "<c-b>" end end, silent = true, expr = true, desc = "Scroll Backward", mode = {"i", "n", "s"}},
+    },
+    config = function(_, opts)
+      -- HACK: noice shows messages from before it was enabled,
+      -- but this is not ideal when Lazy is installing plugins,
+      -- so clear the messages in this case.
+      if vim.o.filetype == 'lazy' then
+        vim.cmd [[messages clear]]
+      end
+      require('noice').setup(opts)
     end,
   },
   {
@@ -121,6 +117,48 @@ return {
     config = function()
       vim.keymap.set('n', '<leader>o', '<cmd>Outline<CR>', { desc = 'Toggle Outline' })
       require('outline').setup {}
+    end,
+  },
+  {
+    'folke/snacks.nvim',
+    priority = 1000,
+    lazy = false,
+    opts = {
+      indent = { enabled = true },
+      input = { enabled = true },
+      notifier = { enabled = true },
+      scope = { enabled = true },
+      scroll = { enabled = true },
+      statuscolumn = { enabled = false }, -- we set this in options.lua
+      words = { enabled = true },
+      bigfile = { enabled = true },
+      quickfile = { enabled = true },
+      terminal = {
+        win = {
+          keys = {
+            nav_h = { '<C-h>', term_nav 'h', desc = 'Go to Left Window', expr = true, mode = 't' },
+            nav_j = { '<C-j>', term_nav 'j', desc = 'Go to Lower Window', expr = true, mode = 't' },
+            nav_k = { '<C-k>', term_nav 'k', desc = 'Go to Upper Window', expr = true, mode = 't' },
+            nav_l = { '<C-l>', term_nav 'l', desc = 'Go to Right Window', expr = true, mode = 't' },
+          },
+        },
+      },
+    },
+    -- stylua: ignore
+    keys = {
+      { "<leader>.",  function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
+      { "<leader>S",  function() Snacks.scratch.select() end, desc = "Select Scratch Buffer" },
+      { "<leader>n", function()
+        if Snacks.config.picker and Snacks.config.picker.enabled then
+          Snacks.picker.notifications()
+        else
+          Snacks.notifier.show_history()
+        end
+      end, desc = "Notification History" },
+      { "<leader>tn", function() Snacks.notifier.hide() end, desc = "Dismiss All Notifications" },
+    },
+    config = function(_, opts)
+      require('snacks').setup(opts)
     end,
   },
   {

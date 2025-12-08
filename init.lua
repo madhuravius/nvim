@@ -104,16 +104,16 @@ require('lazy').setup({
       },
 
       spec = {
-        { '<leader>C', '<cmd>Telescope neoclip<cr>', desc = 'Clipboard', nowait = true, remap = false },
         { '<leader>F', '<cmd>Spectre<cr>', desc = 'Find/Replace', nowait = true, remap = false },
         { '<leader>Q', '<cmd>quitall<cr>', desc = 'Quit all', nowait = true, remap = false },
-        { '<leader>S', '<cmd>DarkLightSwitch<cr>', desc = 'Theme Switcher', nowait = true, remap = false },
+        { '<leader>S', '<cmd>Scratch<cr>', desc = 'Scratchpad', nowait = true, remap = false },
         { '<leader>b', group = 'Buffer', nowait = true, remap = false },
         { '<leader>bb', '<cmd>BufferPrevious<cr>', desc = 'Previous Buffer', nowait = true, remap = false },
         { '<leader>bc', '<cmd>BufferClose<cr>', desc = 'Close Buffer', nowait = true, remap = false },
         { '<leader>bh', '<cmd>BufferCloseBuffersLeft<cr>', desc = 'Close Buffers Left', nowait = true, remap = false },
         { '<leader>bl', '<cmd>BufferCloseBuffersRight<cr>', desc = 'Close Buffers Right', nowait = true, remap = false },
         { '<leader>bm', '<cmd>JABSOpen<cr>', desc = 'Buffer Switcher', nowait = true, remap = false },
+        { '<leader>ba', '<cmd>enew<cr>', desc = 'Buffer Add', nowait = true, remap = false },
         { '<leader>bn', '<cmd>BufferNext<cr>', desc = 'Next Buffer', nowait = true, remap = false },
         { '<leader>c', '<cmd>BufferClose<cr>', desc = 'Close', nowait = true, remap = false },
         { '<leader>e', '<cmd>Neotree toggle<cr>', desc = 'Explorer', nowait = true, remap = false },
@@ -121,17 +121,10 @@ require('lazy').setup({
         { '<leader>gc', '<cmd>DiffviewClose<cr>', desc = 'Diff View close', nowait = true, remap = false },
         { '<leader>gg', '<cmd>LazyGit<cr>', desc = 'LazyGit', nowait = true, remap = false },
         { '<leader>go', '<cmd>DiffviewOpen<cr>', desc = 'Diff View open', nowait = true, remap = false },
-        { '<leader>n', '<cmd>enew<cr>', desc = 'New', nowait = true, remap = false },
         { '<leader>q', '<cmd>quit<cr>', desc = 'Quit', nowait = true, remap = false },
         { '<leader>s', group = 'Search', nowait = true, remap = false },
         { '<leader>t', group = 'Diagnostics', nowait = true, remap = false },
         { '<leader>tR', '<cmd>lua require("renamer").rename()<cr>', desc = 'Rename', nowait = true, remap = false },
-        { '<leader>tS', '<cmd>SymbolsOutline<cr>', desc = 'Symbols', nowait = true, remap = false },
-        { '<leader>td', '<cmd>Trouble diagnostics toggle<cr>', desc = 'Document', nowait = true, remap = false },
-        { '<leader>tl', '<cmd>Trouble loclist toggle<cr>', desc = 'Loclist', nowait = true, remap = false },
-        { '<leader>tq', '<cmd>Trouble qflist toggle<cr>', desc = 'Quickfix', nowait = true, remap = false },
-        { '<leader>tr', '<cmd>Trouble lsp toggle focus=false win.position=right<cr>', desc = 'References', nowait = true, remap = false },
-        { '<leader>tt', '<cmd>Trouble<cr>', desc = 'Trouble', nowait = true, remap = false },
         { '<leader>w', '<cmd>write<cr>', desc = 'Write', nowait = true, remap = false },
       },
     },
@@ -166,7 +159,9 @@ require('lazy').setup({
     -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
     main = 'ibl',
-    opts = {},
+    opts = {
+      scope = { enabled = false },
+    },
   },
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {} },
@@ -449,17 +444,6 @@ local servers = {
   -- tailwindcss = {},
 }
 
--- used for mason ensure installation of non-lsps
-local tools = {
-  'black',
-  'buf',
-  'eslint_d',
-  'isort',
-  'prettier',
-  'rubocop',
-  'tflint',
-}
-
 -- Setup neovim lua configuration
 require('neodev').setup()
 
@@ -469,7 +453,7 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 -- Ensure the servers above are installed
 local mason_lspconfig = require 'mason-lspconfig'
-local servers_to_install = vim.tbl_deep_extend('keep', vim.tbl_keys(servers), { 'tsserver', 'denols' })
+local servers_to_install = vim.tbl_deep_extend('keep', vim.tbl_keys(servers), { 'tsserver' })
 
 mason_lspconfig.setup {
   ensure_installed = servers_to_install,
@@ -495,24 +479,6 @@ vim.lsp.config.ts_ls = {
   settings = {},
 }
 vim.lsp.enable 'ts_ls'
-
--- Setup Deno LSP using new vim.lsp.config API
-if vim.fn.executable 'deno' == 1 then
-  vim.lsp.config.denols = {
-    cmd = { 'deno', 'lsp' },
-    filetypes = { 'javascript', 'javascriptreact', 'javascript.jsx', 'typescript', 'typescriptreact', 'typescript.tsx' },
-    root_markers = { 'deno.json', 'deno.jsonc' },
-    single_file_support = true,
-    settings = {
-      deno = {
-        enable = true,
-        lint = true,
-        unstable = false,
-      },
-    },
-  }
-  vim.lsp.enable 'denols'
-end
 
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
