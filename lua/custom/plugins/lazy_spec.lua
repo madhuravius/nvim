@@ -142,7 +142,6 @@ return {
         { '<leader>ba', '<cmd>enew<cr>', desc = 'Buffer Add', nowait = true, remap = false },
         { '<leader>bn', '<cmd>BufferNext<cr>', desc = 'Next Buffer', nowait = true, remap = false },
         { '<leader>c', '<cmd>BufferClose<cr>', desc = 'Close', nowait = true, remap = false },
-        { '<leader>e', '<cmd>Neotree toggle<cr>', desc = 'Explorer', nowait = true, remap = false },
         { '<leader>g', group = 'Git', nowait = true, remap = false },
         { '<leader>gc', '<cmd>DiffviewClose<cr>', desc = 'Diff View close', nowait = true, remap = false },
         { '<leader>gg', '<cmd>LazyGit<cr>', desc = 'LazyGit', nowait = true, remap = false },

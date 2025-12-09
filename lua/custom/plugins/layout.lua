@@ -87,6 +87,9 @@ return {
   {
     'nvim-neo-tree/neo-tree.nvim',
     version = '*',
+    keys = {
+      { '<leader>e', '<cmd>Neotree toggle<cr>', desc = 'Explorer' },
+    },
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
@@ -94,7 +97,6 @@ return {
     },
     config = function()
       require('neo-tree').setup {
-        close_if_last_window = true,
         window = {
           width = 25,
           mappings = {
