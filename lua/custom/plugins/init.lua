@@ -3,7 +3,7 @@
 --
 -- See the kickstart.nvim README for more information
 return {
-  { 'neovim/nvim-lspconfig' },
+  { 'neovim/nvim-lspconfig', lazy = true },
   {
     'windwp/nvim-spectre',
     event = 'BufRead',
@@ -13,6 +13,7 @@ return {
   },
   {
     'romgrk/nvim-treesitter-context',
+    event = 'BufRead',
     config = function()
       require('treesitter-context').setup {
         enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)

@@ -9,9 +9,10 @@ local function term_nav(dir)
 end
 
 return {
-  { 'Bekaboo/dropbar.nvim' },
+  { 'Bekaboo/dropbar.nvim', event = 'VeryLazy' },
   {
     'matbme/JABS.nvim',
+    event = 'VeryLazy',
     config = function()
       require('jabs').setup {
         position = { 'center', 'top' },

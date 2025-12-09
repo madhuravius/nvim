@@ -1,13 +1,14 @@
 return {
   {
     'kdheepak/lazygit.nvim',
-    -- optional for floating window border decoration
+    cmd = { 'LazyGit' },
     dependencies = {
       'nvim-lua/plenary.nvim',
     },
   },
   {
     'lewis6991/gitsigns.nvim',
+    event = 'BufRead',
     config = function()
       require('gitsigns').setup()
     end,
