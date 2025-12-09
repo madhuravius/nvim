@@ -134,7 +134,7 @@ return {
       input = { enabled = true },
       notifier = { enabled = true },
       scope = { enabled = true },
-      scroll = { enabled = true },
+      scroll = { enabled = false },
       statuscolumn = { enabled = false }, -- we set this in options.lua
       words = { enabled = true },
       bigfile = { enabled = true },
@@ -177,7 +177,7 @@ return {
       vim.g.barbar_auto_setup = true
     end,
     opts = {
-      animation = true,
+      animation = false,
       insert_at_start = true,
       auto_hide = true,
       clickable = true,

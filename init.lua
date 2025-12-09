@@ -1,4 +1,7 @@
 ---@diagnostic disable: undefined-global
+-- Impatient: speeds up startup by bytecode caching Lua modules
+pcall(require, 'impatient')
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
@@ -39,6 +42,7 @@ end
 --    as they will be available in your neovim runtime.
 require('lazy').setup({
   -- NOTE: First, some plugins that don't require any configuration
+  { 'lewis6991/impatient.nvim', lazy = false },
   'tpope/vim-fugitive',
 
   -- Detect tabstop and shiftwidth automatically
@@ -519,12 +523,12 @@ local servers = {
   gopls = {},
   -- gradle_ls = {},
   -- jdtls = {},
-  -- lua_ls = {
-  --   Lua = {
-  --     workspace = { checkThirdParty = false },
-  --     telemetry = { enable = false },
-  --   },
-  -- },
+  lua_ls = {
+    Lua = {
+      workspace = { checkThirdParty = false },
+      telemetry = { enable = false },
+    },
+  },
   -- kotlin_language_server = {},
   pyright = {},
   rust_analyzer = {},
