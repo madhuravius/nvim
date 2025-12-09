@@ -65,18 +65,110 @@ require('lazy').setup({
 
   {
     -- Autocompletion
-    'hrsh7th/nvim-cmp',
+    'saghen/blink.cmp',
     dependencies = {
-      -- Snippet Engine & its associated nvim-cmp source
+      -- Snippet Engine
       'L3MON4D3/LuaSnip',
-      'saadparwaiz1/cmp_luasnip',
-
-      -- Adds LSP completion capabilities
-      'hrsh7th/cmp-nvim-lsp',
 
       -- Adds a number of user-friendly snippets
       'rafamadriz/friendly-snippets',
+
+      -- Compatibility layer for nvim-cmp sources
+      'saghen/blink.compat',
+
+      -- External completion sources
+      'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-path',
+      'hrsh7th/cmp-nvim-lua',
+      'hrsh7th/cmp-vsnip',
+      'hrsh7th/vim-vsnip',
     },
+    version = '1.*',
+    opts = {
+      keymap = {
+        preset = 'default',
+        ['<C-n>'] = { 'select_next', 'fallback' },
+        ['<C-p>'] = { 'select_prev', 'fallback' },
+        ['<C-d>'] = { 'scroll_documentation_up', 'fallback' },
+        ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
+        ['<C-Space>'] = { 'show', 'show_documentation', 'hide_documentation' },
+        ['<CR>'] = { 'accept', 'fallback' },
+        ['<Tab>'] = {
+          function(cmp)
+            if cmp.snippet_active() then
+              return cmp.snippet_forward()
+            else
+              return cmp.select_next()
+            end
+          end,
+          'snippet_forward',
+          'fallback',
+        },
+        ['<S-Tab>'] = {
+          function(cmp)
+            if cmp.snippet_active() then
+              return cmp.snippet_backward()
+            else
+              return cmp.select_prev()
+            end
+          end,
+          'snippet_backward',
+          'fallback',
+        },
+      },
+      appearance = {
+        nerd_font_variant = 'mono',
+      },
+      completion = {
+        documentation = {
+          auto_show = false,
+          auto_show_delay_ms = 0,
+          window = {
+            border = 'rounded',
+          },
+        },
+        list = {
+          selection = {
+            preselect = false,
+            auto_insert = false,
+          },
+        },
+      },
+      sources = {
+        default = { 'lsp', 'path', 'snippets', 'buffer', 'nvim_lua' },
+        compat = { 'nvim_lsp', 'nvim_lsp_signature_help', 'nvim_lua', 'buffer', 'path', 'luasnip', 'vsnip' },
+        providers = {
+          lsp = {
+            name = 'lsp',
+            enabled = true,
+            max_items = 300,
+          },
+          snippets = {
+            name = 'snippets',
+            enabled = true,
+          },
+          buffer = {
+            name = 'buffer',
+            enabled = true,
+            min_keyword_length = 2,
+          },
+          nvim_lua = {
+            name = 'nvim_lua',
+            enabled = true,
+            min_keyword_length = 2,
+            module = 'blink.compat.source',
+          },
+        },
+      },
+      snippets = {
+        preset = 'luasnip',
+      },
+      fuzzy = {
+        implementation = 'prefer_rust_with_warning',
+      },
+    },
+    opts_extend = { 'sources.default' },
   },
 
   -- Useful plugin to show you pending keybinds.
@@ -446,9 +538,9 @@ local servers = {
 -- Setup neovim lua configuration
 require('neodev').setup()
 
--- nvim-cmp supports additional completion capabilities, so broadcast that to servers
+-- blink.cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
 
 -- Ensure the servers above are installed
 local mason_lspconfig = require 'mason-lspconfig'
@@ -479,74 +571,10 @@ vim.lsp.config.ts_ls = {
 }
 vim.lsp.enable 'ts_ls'
 
--- [[ Configure nvim-cmp ]]
--- See `:help cmp`
-local cmp = require 'cmp'
-local luasnip = require 'luasnip'
-local lspkind = require 'lspkind'
+-- [[ Configure blink.cmp ]]
+-- blink.cmp is configured via the plugin spec above (opts)
+-- Load luasnip snippets from vscode-style snippet packs
 require('luasnip.loaders.from_vscode').lazy_load()
-
-luasnip.config.setup {}
-
-cmp.setup {
-  snippet = {
-    expand = function(args)
-      luasnip.lsp_expand(args.body)
-    end,
-  },
-  mapping = cmp.mapping.preset.insert {
-    ['<C-n>'] = cmp.mapping.select_next_item(),
-    ['<C-p>'] = cmp.mapping.select_prev_item(),
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete {},
-    ['<CR>'] = cmp.mapping.confirm {
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
-    },
-    ['<Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif luasnip.expand_or_locally_jumpable() then
-        luasnip.expand_or_jump()
-      else
-        fallback()
-      end
-    end, { 'i', 's' }),
-    ['<S-Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif luasnip.locally_jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end, { 'i', 's' }),
-  },
-  formatting = {
-    format = lspkind.cmp_format {
-      mode = 'symbol',
-      max_width = 50,
-      symbol_map = { Copilot = '' },
-    },
-  },
-  sources = {
-    { name = 'copilot' },
-    { name = 'luasnip' },
-    { name = 'path' },
-    { name = 'nvim_lsp', keyword_length = 3, max_item_count = 300 },
-    { name = 'nvim_lsp_signature_help' },
-    { name = 'nvim_lua', keyword_length = 2 },
-    { name = 'buffer', keyword_length = 2 },
-    { name = 'vsnip', keyword_length = 2 },
-  },
-  window = {
-    documentation = cmp.config.window.bordered(),
-    completion = cmp.config.window.bordered {
-      winhighlight = 'Normal:CmpPmenu,CursorLine:PmenuSel,Search:None',
-    },
-  },
-}
 
 vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded' })
 vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'rounded' })

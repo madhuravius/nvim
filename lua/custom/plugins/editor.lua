@@ -80,9 +80,6 @@ return {
     end,
   },
   {
-    'hrsh7th/cmp-nvim-lsp-signature-help',
-  },
-  {
     'norcalli/nvim-colorizer.lua',
     config = function()
       require('colorizer').setup({ 'css', 'scss', 'html', 'javascript' }, {
