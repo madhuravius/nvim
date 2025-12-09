@@ -94,8 +94,14 @@ return {
     end,
   },
   {
-    'hiphish/rainbow-delimiters.nvim',
-    branch = 'master',
+    'ray-x/lsp_signature.nvim',
+    event = 'InsertEnter',
+    opts = {
+      bind = true,
+      handler_opts = {
+        border = 'rounded',
+      },
+    },
   },
   {
     'filipdutescu/renamer.nvim',
@@ -135,7 +141,7 @@ return {
     'RRethy/vim-illuminate',
     event = 'VeryLazy',
     opts = {
-      delay = 200,
+      delay = 400,
       large_file_cutoff = 2000,
       large_file_overrides = {
         providers = { 'lsp' },

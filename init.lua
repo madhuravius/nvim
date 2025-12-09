@@ -41,31 +41,14 @@ end
 --  You can also configure plugins after the setup call,
 --    as they will be available in your neovim runtime.
 require('lazy').setup({
-  -- NOTE: First, some plugins that don't require any configuration
   { 'lewis6991/impatient.nvim', lazy = false },
   'tpope/vim-fugitive',
 
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
 
-  -- NOTE: This is where your plugins related to LSP can be installed.
-  --  The configuration is done below. Search for lspconfig to find it below.
-  {
-    -- LSP Configuration & Plugins
-    'neovim/nvim-lspconfig',
-    dependencies = {
-      -- Automatically install LSPs to stdpath for neovim
-      { 'williamboman/mason.nvim', config = true },
-      'williamboman/mason-lspconfig.nvim',
-
-      -- Useful status updates for LSP
-      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
-
-      -- Additional lua configuration, makes nvim stuff amazing!
-      'folke/neodev.nvim',
-    },
-  },
+  { 'williamboman/mason.nvim', config = true },
+  { 'williamboman/mason-lspconfig.nvim' },
 
   {
     -- Autocompletion
@@ -416,7 +399,7 @@ require('nvim-treesitter.configs').setup {
     },
   },
   rainbow = {
-    enable = true,
+    enable = false,
   },
   textobjects = {
     select = {
@@ -514,66 +497,31 @@ end
 --
 --  Add any additional override configuration in the following tables. They will be passed to
 --  the `settings` field of the server config. You must look up that documentation yourself.
-local lsp_config_util = require 'lspconfig.util'
-local servers = {
-  bashls = {},
-  clangd = {},
-  -- crystalline = {},
-  elixirls = {},
-  gopls = {},
-  -- gradle_ls = {},
-  -- jdtls = {},
-  lua_ls = {
-    Lua = {
-      workspace = { checkThirdParty = false },
-      telemetry = { enable = false },
-    },
-  },
-  -- kotlin_language_server = {},
-  pyright = {},
-  rust_analyzer = {},
-  -- sqlls = {},
-  -- terraformls = {},
-  ts_ls = {},
-  solargraph = {},
-  -- tailwindcss = {},
+local langs = {
+  'elixirls',
+  'gopls',
+  'html',
+  'jdtls',
+  'jsonls',
+  'lua_ls',
+  'pyright',
+  'ruby_lsp',
+  'rust_analyzer',
+  'tflint',
+  'ts_ls',
+  'yamlls',
 }
 
--- Setup neovim lua configuration
-require('neodev').setup()
+vim.lsp.enable(langs)
 
 -- blink.cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
 
 -- Ensure the servers above are installed
-local mason_lspconfig = require 'mason-lspconfig'
-local servers_to_install = vim.tbl_deep_extend('keep', vim.tbl_keys(servers), { 'tsserver' })
-
-mason_lspconfig.setup {
-  ensure_installed = servers_to_install,
+require('mason-lspconfig').setup {
+  ensure_installed = langs,
 }
-
-mason_lspconfig.setup {
-  handlers = {
-    function(server_name)
-      require('lspconfig')[server_name].setup {
-        capabilities = capabilities,
-        on_attach = on_attach,
-        root_dir = lsp_config_util.root_pattern 'package.json',
-      }
-    end,
-  },
-}
--- Setup TypeScript LSP using new vim.lsp.config API
-vim.lsp.config.ts_ls = {
-  cmd = { 'typescript-language-server', '--stdio' },
-  filetypes = { 'javascript', 'javascriptreact', 'javascript.jsx', 'typescript', 'typescriptreact', 'typescript.tsx' },
-  root_markers = { 'package.json', 'tsconfig.json' },
-  single_file_support = false,
-  settings = {},
-}
-vim.lsp.enable 'ts_ls'
 
 -- [[ Configure blink.cmp ]]
 -- blink.cmp is configured via the plugin spec above (opts)
