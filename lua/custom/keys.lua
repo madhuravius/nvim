@@ -11,21 +11,22 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
 
--- See `:help telescope.builtin`
-vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
-vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
-vim.keymap.set('n', '<leader>p', require('telescope.builtin').commands, { desc = '[p] Find commands' })
+-- Snacks picker keymaps
+vim.keymap.set('n', '<leader>?', function()
+  Snacks.picker.recent()
+end, { desc = '[?] Find recently opened files' })
+vim.keymap.set('n', '<leader><space>', function()
+  Snacks.picker.buffers()
+end, { desc = '[ ] Find existing buffers' })
+vim.keymap.set('n', '<leader>p', function()
+  Snacks.picker.commands()
+end, { desc = '[p] Find commands' })
 vim.keymap.set('n', '<leader>f', function()
-  -- You can pass additional configuration to telescope to change theme, layout, etc.
-  require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-    winblend = 10,
-    previewer = false,
-  })
+  Snacks.picker.lines()
 end, { desc = '[/] Fuzzily search in current buffer' })
-
-vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
-vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
-vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
-vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
-vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
-vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
+vim.keymap.set('n', '<leader>gf', function()
+  Snacks.picker.git_files()
+end, { desc = 'Search [G]it [F]iles' })
+vim.keymap.set('n', '<leader>sw', function()
+  Snacks.picker.grep_word()
+end, { desc = '[S]earch current [W]ord' })

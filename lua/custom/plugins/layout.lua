@@ -136,6 +136,44 @@ return {
       indent = { enabled = true },
       input = { enabled = true },
       notifier = { enabled = true },
+      picker = {
+        enabled = true,
+        layout = {
+          preset = function()
+            return vim.o.columns >= 120 and 'telescope' or 'vertical'
+          end,
+        },
+        layouts = {
+          telescope = {
+            reverse = false,
+            layout = {
+              box = 'horizontal',
+              backdrop = false,
+              width = 0.8,
+              height = 0.9,
+              border = 'none',
+              {
+                box = 'vertical',
+                {
+                  win = 'input',
+                  height = 1,
+                  border = 'rounded',
+                  title = '{title} {live} {flags}',
+                  title_pos = 'center',
+                },
+                { win = 'list', title = ' Results ', title_pos = 'center', border = 'rounded' },
+              },
+              {
+                win = 'preview',
+                title = '{preview:Preview}',
+                width = 0.7,
+                border = 'rounded',
+                title_pos = 'center',
+              },
+            },
+          },
+        },
+      },
       scope = { enabled = true },
       scroll = { enabled = false },
       statuscolumn = { enabled = false }, -- we set this in options.lua
@@ -168,6 +206,11 @@ return {
     },
     config = function(_, opts)
       require('snacks').setup(opts)
+      -- Improve picker text readability
+      vim.api.nvim_set_hl(0, 'SnacksPickerInput', { fg = '#ffffff', bold = true })
+      vim.api.nvim_set_hl(0, 'SnacksPickerMatch', { fg = '#ffffff', bold = true })
+      vim.api.nvim_set_hl(0, 'SnacksPickerDir', { fg = '#61AFEF', bold = true })
+      vim.api.nvim_set_hl(0, 'SnacksPickerFile', { fg = '#E8E8E8' })
     end,
   },
   {
