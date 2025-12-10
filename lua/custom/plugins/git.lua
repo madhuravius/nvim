@@ -1,12 +1,5 @@
 return {
   {
-    'kdheepak/lazygit.nvim',
-    cmd = { 'LazyGit' },
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-    },
-  },
-  {
     'lewis6991/gitsigns.nvim',
     event = 'BufRead',
     config = function()

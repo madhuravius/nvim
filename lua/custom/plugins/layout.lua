@@ -135,6 +135,7 @@ return {
     opts = {
       indent = { enabled = true },
       input = { enabled = true },
+      lazygit = {},
       notifier = { enabled = true },
       picker = {
         enabled = true,
