@@ -1,5 +1,6 @@
 -- [[ Configure LSP ]]
 local langs = {
+  'crystalline',
   'elixirls',
   'gopls',
   'html',

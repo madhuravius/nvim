@@ -1,4 +1,5 @@
 return {
+  { 'jlcrochet/vim-crystal', event = 'VeryLazy' },
   {
     -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
@@ -19,6 +20,7 @@ return {
           'bash',
           'c',
           'cpp',
+          'crystal',
           'elixir',
           'go',
           'hcl',

@@ -3,7 +3,10 @@
 --
 -- See the kickstart.nvim README for more information
 return {
-  { 'neovim/nvim-lspconfig', lazy = true },
+  {
+    'neovim/nvim-lspconfig',
+    lazy = true,
+  },
   {
     'windwp/nvim-spectre',
     event = 'BufRead',
