@@ -76,6 +76,15 @@ return {
     'windwp/nvim-spectre',
     event = 'BufRead',
     config = function()
+      -- Check if ripgrep or grep is available
+      local has_rg = vim.fn.executable 'rg' == 1
+      local has_grep = vim.fn.executable 'grep' == 1
+
+      if not has_rg and not has_grep then
+        vim.notify('nvim-spectre requires ripgrep (rg) or grep to be installed', vim.log.levels.WARN)
+        return
+      end
+
       require('spectre').setup()
     end,
   },

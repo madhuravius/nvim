@@ -15,6 +15,15 @@ local langs = {
   'yamlls',
 }
 
+local lsp_dir = vim.fn.stdpath 'config' .. '/lsp'
+for filename in vim.fs.dir(lsp_dir) do
+  if filename:match '%.lua$' then
+    local module_name = filename:gsub('%.lua$', ''):gsub('-', '_')
+    local filepath = lsp_dir .. '/' .. filename
+    vim.lsp.config(module_name, dofile(filepath))
+  end
+end
+
 vim.lsp.enable(langs)
 
 -- blink.cmp supports additional completion capabilities, so broadcast that to servers
