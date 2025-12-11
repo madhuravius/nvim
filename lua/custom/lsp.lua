@@ -43,8 +43,3 @@ vim.diagnostic.config {
     source = 'always',
   },
 }
-
--- Store on_attach for use by plugins if needed
-return {
-  on_attach = on_attach,
-}
