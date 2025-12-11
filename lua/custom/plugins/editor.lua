@@ -114,6 +114,7 @@ return {
   },
   {
     'filipdutescu/renamer.nvim',
+    event = 'VeryLazy',
     config = function()
       require('renamer').setup {}
     end,
@@ -122,6 +123,7 @@ return {
   -- below used for code folding
   {
     'kevinhwang91/nvim-ufo',
+    event = 'VeryLazy',
     config = function()
       require('ufo').setup {
         provider_selector = function(bufnr, filetype, buftype)

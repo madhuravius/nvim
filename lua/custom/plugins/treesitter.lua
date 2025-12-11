@@ -6,6 +6,7 @@ return {
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
     },
+    event = 'VeryLazy',
     build = ':TSUpdate',
     config = function()
       -- [[ Configure Treesitter ]]

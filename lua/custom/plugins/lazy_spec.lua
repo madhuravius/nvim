@@ -10,6 +10,7 @@ return {
   -- Autocompletion (load immediately - needed for editing)
   {
     'saghen/blink.cmp',
+    event = 'VeryLazy',
     dependencies = {
       'L3MON4D3/LuaSnip',
       'rafamadriz/friendly-snippets',
