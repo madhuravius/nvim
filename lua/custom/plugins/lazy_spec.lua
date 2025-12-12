@@ -66,6 +66,11 @@ return {
             border = 'rounded',
           },
         },
+        ghost_text = {
+          enabled = true,
+          auto_show = true,
+          show_with_menu = true,
+        },
         list = {
           selection = {
             preselect = false,
@@ -81,6 +86,7 @@ return {
               { 'kind_icon', 'kind', gap = 1 },
             },
           },
+          winhighlight = 'Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,CursorLine:BlinkCmpDocCursorLine,Search:None',
         },
       },
       sources = {
