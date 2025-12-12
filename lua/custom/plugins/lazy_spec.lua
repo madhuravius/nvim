@@ -146,6 +146,7 @@ return {
         { '<leader>g', group = 'Git', nowait = true, remap = false },
         { '<leader>gc', '<cmd>DiffviewClose<cr>', desc = 'Diff View close', nowait = true, remap = false },
         { '<leader>go', '<cmd>DiffviewOpen<cr>', desc = 'Diff View open', nowait = true, remap = false },
+        { '<leader>l', group = 'Last Session', nowait = true, remap = false },
         { '<leader>q', '<cmd>quit<cr>', desc = 'Quit', nowait = true, remap = false },
         { '<leader>s', group = 'Search', nowait = true, remap = false },
         { '<leader>t', group = 'Diagnostics', nowait = true, remap = false },
