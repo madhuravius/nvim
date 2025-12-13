@@ -13,6 +13,7 @@ local langs = {
   'tflint',
   'ts_ls',
   'yamlls',
+  'zls',
 }
 
 local lsp_dir = vim.fn.stdpath 'config' .. '/lsp'
