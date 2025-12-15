@@ -6,6 +6,7 @@ return {
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
     },
+    branch = 'master',
     event = 'VeryLazy',
     build = ':TSUpdate',
     config = function()
@@ -46,7 +47,7 @@ return {
         },
 
         -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
-        auto_install = false,
+        auto_install = true,
 
         highlight = { enable = true },
         indent = { enable = true },
