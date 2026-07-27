@@ -223,39 +223,34 @@ return {
     end,
   },
   {
-    'romgrk/barbar.nvim',
+    'akinsho/bufferline.nvim',
     event = 'VeryLazy',
     dependencies = {
-      'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
-      'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
+      'nvim-tree/nvim-web-devicons',
     },
-    init = function()
-      vim.g.barbar_auto_setup = true
-    end,
     opts = {
-      animation = false,
-      insert_at_start = true,
-      auto_hide = true,
-      clickable = true,
-      focus_on_close = 'left',
-      highlight_visible = true,
-      icons = {
-        button = '',
-        diagnostics = {
-          [vim.diagnostic.severity.ERROR] = { enabled = true, icon = '' },
-          [vim.diagnostic.severity.WARN] = { enabled = true, icon = '' },
+      options = {
+        always_show_bufferline = false,
+        modified_icon = '●',
+        close_icon = '',
+        indicator = { icon = '▎', style = 'icon' },
+        separator_style = { '', '' },
+        diagnostics = 'nvim_lsp',
+        diagnostics_indicator = function(_, level)
+          return level:match 'error' and '  ' or '  '
+        end,
+        show_buffer_close_icons = true,
+        show_close_icon = false,
+        left_mouse_command = 'buffer %d',
+        offsets = {
+          {
+            filetype = 'neo-tree',
+            text = 'Explorer',
+            highlight = 'Directory',
+            separator = true,
+          },
         },
-        gitsigns = {
-          added = { enabled = true, icon = '+' },
-          changed = { enabled = true, icon = '~' },
-          deleted = { enabled = true, icon = '-' },
-        },
-        pinned = { button = '' },
-        separator = { left = '▎', right = '' },
-        modified = { button = '●' },
       },
-      maximum_padding = math.huge,
     },
-    version = '^1.0.0', -- optional: only update when a new 1.x version is released
   },
 }

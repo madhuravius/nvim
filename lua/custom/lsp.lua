@@ -37,8 +37,12 @@ require('mason-lspconfig').setup {
 }
 
 -- LSP handler borders
-vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded' })
-vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'rounded' })
+vim.lsp.handlers['textDocument/hover'] = function(err, result, ctx, config)
+  return vim.lsp.handlers.hover(err, result, ctx, vim.tbl_deep_extend('force', config or {}, { border = 'rounded' }))
+end
+vim.lsp.handlers['textDocument/signatureHelp'] = function(err, result, ctx, config)
+  return vim.lsp.handlers.signature_help(err, result, ctx, vim.tbl_deep_extend('force', config or {}, { border = 'rounded' }))
+end
 
 -- Load luasnip snippets from vscode-style snippet packs
 require('luasnip.loaders.from_vscode').lazy_load()

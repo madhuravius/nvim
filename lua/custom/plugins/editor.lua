@@ -112,14 +112,6 @@ return {
       },
     },
   },
-  {
-    'filipdutescu/renamer.nvim',
-    event = 'VeryLazy',
-    config = function()
-      require('renamer').setup {}
-    end,
-    dependencies = 'nvim-lua/plenary.nvim',
-  },
   -- below used for code folding
   {
     'kevinhwang91/nvim-ufo',
@@ -185,8 +177,8 @@ return {
     },
   },
   {
-    "folke/lazydev.nvim",
-    ft = "lua", -- only load on lua files
-    opts = { },
+    'folke/lazydev.nvim',
+    ft = 'lua', -- only load on lua files
+    opts = {},
   },
 }
